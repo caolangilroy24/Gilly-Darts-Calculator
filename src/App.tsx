@@ -1,10 +1,13 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import DartsHeader from './DartsHeader';
 
 function App() {
   return (
     <div className="App">
+      <DartsHeader />
+      <header></header>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
