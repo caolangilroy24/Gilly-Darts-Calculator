@@ -6,6 +6,7 @@ import NumberTile from './NumberTile';
 import dartsBackground from './img/StockDarts.jpg';
 import ChalkBoard from './ChalkBoard';
 import MainMenu from './MainMenu';
+import ScoreBoard from './ScoreBoard';
 
 
 function App() {
@@ -25,9 +26,10 @@ function App() {
 
     <div className="App" style={{backgroundImage:`url(${dartsBackground})`,backgroundRepeat:"no-repeat"}}>
       <DartsHeader />
+      <ScoreBoard name="Caolan"/>
       {/* <ChalkBoard /> */}
-      {/* <NumberTile num={num}/> */}
-      <div className='main'><div className='game-container'>{numberTiles}</div></div>
+      <NumberTile num={num}/>
+      {/* <div className='main'><div className='game-container'>{numberTiles}</div></div> */}
       
     </div>
   );
