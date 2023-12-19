@@ -7,18 +7,11 @@ import dartsBackground from './img/StockDarts.jpg';
 import ChalkBoard from './ChalkBoard';
 import MainMenu from './MainMenu';
 import ScoreBoard from './ScoreBoard';
+import StandardMode from './StandardMode';
 
 
 function App() {
-  const myArray1: number[] = Array.from({ length: 20 }, (_, index) => index + 1);
-  const numberTiles: JSX.Element[] = [];
-  console.log(myArray1)
-  myArray1.reverse();
-  console.log(myArray1)
-
-  myArray1.forEach((value)=> {
-        numberTiles.push(<NumberTile num={value}/>)
-    })            
+              
 
 
   let num:number = 20;
@@ -26,9 +19,10 @@ function App() {
 
     <div className="App" style={{backgroundImage:`url(${dartsBackground})`,backgroundRepeat:"no-repeat"}}>
       <DartsHeader />
-      <ScoreBoard name="Caolan"/>
+      {/* <ScoreBoard name="Caolan"/> */}
       {/* <ChalkBoard /> */}
-      <NumberTile num={num}/>
+      {/* <NumberTile num={num}/> */}
+      <StandardMode />
       {/* <div className='main'><div className='game-container'>{numberTiles}</div></div> */}
       
     </div>
