@@ -16,7 +16,7 @@ export default function StandardMode() {
         })
   return (
     <div className='standard-board'>
-        <div className='standard-board-first-row'><ScoreBoard name="Caolan"/><Multiple multiple='X3'/><Multiple multiple='X2'/>  <ScoreBoard name='Dad'/></div>
+        <div className='standard-board-first-row'><ScoreBoard name="Caolan"/><Multiple multiple='50'/><Multiple multiple='25'/>  <ScoreBoard name='Dad'/></div>
         
       <div className='main'><div className='game-container'>{numberTiles}</div></div>
         
