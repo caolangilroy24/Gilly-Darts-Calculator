@@ -8,8 +8,7 @@ interface MultipleProps {
 export default function Multiple({multiple}: MultipleProps) {
   return (
     <div className='bull'>
-        <div className='bull'>{multiple}
-        </div>
+        {multiple}
     </div>
   )
 }
