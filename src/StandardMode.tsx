@@ -1,7 +1,7 @@
 import React from 'react'
 import ScoreBoard from './ScoreBoard'
 import NumberTile from './NumberTile'
-import Multiple from './Multiple';
+import Bull from './Bull';
 
 
 export default function StandardMode() {
@@ -16,7 +16,7 @@ export default function StandardMode() {
         })
   return (
     <div className='standard-board'>
-        <div className='standard-board-first-row'><ScoreBoard name="Caolan"/><Multiple multiple='50'/><Multiple multiple='25'/>  <ScoreBoard name='Dad'/></div>
+        <div className='standard-board-first-row'><ScoreBoard name="Caolan"/><Bull bull='50'/><Bull bull='25'/>  <ScoreBoard name='Dad'/></div>
         
       <div className='main'><div className='game-container'>{numberTiles}</div></div>
         

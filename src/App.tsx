@@ -8,6 +8,7 @@ import ChalkBoard from './ChalkBoard';
 import MainMenu from './MainMenu';
 import ScoreBoard from './ScoreBoard';
 import StandardMode from './StandardMode';
+import CricketMode from './CricketMode';
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
       {/* <ScoreBoard name="Caolan"/> */}
       {/* <ChalkBoard /> */}
       {/* <NumberTile num={num}/> */}
-      <StandardMode />
+      {/* <StandardMode /> */}
+      <CricketMode />
       {/* <div className='main'><div className='game-container'>{numberTiles}</div></div> */}
       
     </div>

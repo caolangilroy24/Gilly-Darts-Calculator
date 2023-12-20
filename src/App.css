@@ -374,3 +374,26 @@
 
 }
 
+.cricket-bull {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 3rem;
+  width: 20vw;
+  height: 25vh;
+  border: 4px solid #C0C0C0;
+  box-sizing: border-box;
+  /* background-color: #E3292E; */
+
+
+  /* Rectangle 36 */
+
+  box-sizing: border-box;
+
+  /* width: 718px; */
+  /* height: 255px; */
+
+}
+
