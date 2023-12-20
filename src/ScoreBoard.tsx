@@ -1,21 +1,20 @@
 import React from 'react'
-import { GiDart } from "react-icons/gi";
-import { GiBull } from "react-icons/gi";
 import CricketCount from './CricketCount';
-
-
-
 
 interface ScoreBoardProps {
     name: string;
     isCricketMode?: boolean;
+    isAroundTheBoardMode?: boolean;
 }
 
-export default function ScoreBoard({name, isCricketMode=false}: ScoreBoardProps) {
+export default function ScoreBoard({name, isCricketMode=false, isAroundTheBoardMode=false}: ScoreBoardProps) {
 
 
     let scoreTile = <div>  </div>
+    let cricketStyle = {width: '40vw'}
+
     if (isCricketMode) {
+        console.log('TRUUUU')
         const myArray1: number[] = Array.from({ length: 6 }, (_, index) => index + 15);
         myArray1.reverse();
         const cricketScores: JSX.Element[] = [];
@@ -23,7 +22,6 @@ export default function ScoreBoard({name, isCricketMode=false}: ScoreBoardProps)
         myArray1.forEach((value)=> {
             cricketScores.push(<CricketCount num={value}/>)
         })
-        let cricketStyle = {width: '40vw'}
 
         scoreTile = <div className='score-tile' style={cricketStyle}>
                         <div className='top-score-tile-element'>{name}</div>
@@ -32,7 +30,13 @@ export default function ScoreBoard({name, isCricketMode=false}: ScoreBoardProps)
                             </div>
                         </div>
                 
-        // </div>
+    } else if(isAroundTheBoardMode) {
+        scoreTile = <div className='score-tile' style={cricketStyle}>
+                        <div className='top-score-tile-element'>{name}</div>
+                            <div className='cricket-score-container'>
+                                placeholder***
+                            </div>
+                        </div>
     } else { 
         scoreTile = <div className='score-tile'>
         <div className='top-score-tile-element'>{name}

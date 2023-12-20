@@ -9,6 +9,7 @@ import MainMenu from './MainMenu';
 import ScoreBoard from './ScoreBoard';
 import StandardMode from './StandardMode';
 import CricketMode from './CricketMode';
+import AroundTheBoardMode from './AroundTheBoardMode';
 
 
 function App() {
@@ -22,9 +23,10 @@ function App() {
       <DartsHeader />
       {/* <ScoreBoard name="Caolan"/> */}
       {/* <ChalkBoard /> */}
-      {/* <NumberTile num={num}/> */}
+      {/* <NumberTile num={20}/> */}
       {/* <StandardMode /> */}
-      <CricketMode />
+      <AroundTheBoardMode />
+      {/* <CricketMode /> */}
       {/* <div className='main'><div className='game-container'>{numberTiles}</div></div> */}
       
     </div>
