@@ -295,7 +295,7 @@
   font-size: 3rem;
 
   width: 20vw;
-  height: 10vh;
+  height: 8vh;
 
   /* background-color: #000000; */
   /* font-family: 'Inconsolata'; */
@@ -318,26 +318,19 @@
   flex-direction: row;
   font-family: VT323;
   font-size: 3rem;
-  /* box-sizing: border-box; */
-  /* padding-bottom: 1vh; */
-  /* color: white  ; */
-  /* 17-3 */
-
-  /* width: 145px; */
-  /* height: 90px; */
   color: #00FF00;
-
-
-  
-
-
-
   width: 18vw;
-  /* height: 6vh; */
-  /* left: 1px; */
-
-  
-
+}
+.bottom-cricket-tile-elements {
+  /* Rectangle 7 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  font-family: VT323;
+  font-size: 3rem;
+  color: #00FF00;
+  width: 5vw;
 }
 
 
@@ -396,4 +389,65 @@
   /* height: 255px; */
 
 }
+
+.cricket-score-count{
+  margin: 1vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  align-items: end;
+  /* padding-left: 2vw; */
+  /* padding-top: 1vh; */
+  color: #00FF00;
+  border-color: #00FF00;
+  border-bottom: 4px solid #00FF00;
+  /* width: 18vw; */
+  /* font-size: 1.5rem; */
+  font-family: VT323;
+}
+
+.cricket-count-down-element{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  padding-left: 2px;
+  padding-right: 2px;
+  border: #00FF00 1px dashed;
+  /* align-items: end; */
+  /* padding-left: 2vw; */
+  /* padding-top: 1vh; */
+  /* width: 18vw; */
+  font-size: 1.5rem;
+  font-family: VT323;
+}
+
+.cricket-score-container {
+  /* Rectangle 7 */
+display: flex;
+/* box-sizing: border-box; */
+/* color: white; */
+align-items: center;
+justify-content: center;
+flex-direction: row;
+/* margin: ; */
+/* font-size: 3rem; */
+
+/* width: 20vw; */
+/* height: 10vh; */
+
+/* background-color: #000000; */
+/* font-family: 'Inconsolata'; */
+font-family: VT323;
+/* font-style: normal; */
+/* font-weight: 700; */
+/* font-size: 60px; */
+/* line-height: 63px; */
+/* text-align: center; */
+
+color: #00FF00;
+
+}
+
 
