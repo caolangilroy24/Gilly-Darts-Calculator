@@ -10,6 +10,7 @@ import ScoreBoard from './ScoreBoard';
 import StandardMode from './StandardMode';
 import CricketMode from './CricketMode';
 import AroundTheBoardMode from './AroundTheBoardMode';
+import SelectUser from './SelectUser';
 
 
 function App() {
@@ -25,7 +26,8 @@ function App() {
       {/* <ChalkBoard /> */}
       {/* <NumberTile num={20}/> */}
       {/* <StandardMode /> */}
-      <AroundTheBoardMode />
+      {/* <AroundTheBoardMode /> */}
+      <SelectUser />
       {/* <CricketMode /> */}
       {/* <div className='main'><div className='game-container'>{numberTiles}</div></div> */}
       
