@@ -12,7 +12,7 @@ export default function SelectUser() {
             <a>Dad</a>
             <a>Rian</a>
             <a>Ruairi</a>
-            <a>Eibhin</a> &check 
+            <a>Eibhin</a>  
             </div>
                 {/* <MainMenu /> */}
             </div>

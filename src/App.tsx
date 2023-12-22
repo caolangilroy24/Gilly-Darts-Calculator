@@ -11,7 +11,7 @@ import StandardMode from './StandardMode';
 import CricketMode from './CricketMode';
 import AroundTheBoardMode from './AroundTheBoardMode';
 import SelectUser from './SelectUser';
-
+import GameRoutes from './GameRoutes';
 
 function App() {
               
@@ -22,12 +22,14 @@ function App() {
 
     <div className="App" style={{backgroundImage:`url(${dartsBackground})`,backgroundRepeat:"no-repeat"}}>
       <DartsHeader />
+      <GameRoutes />
+
       {/* <ScoreBoard name="Caolan"/> */}
       {/* <ChalkBoard /> */}
       {/* <NumberTile num={20}/> */}
       {/* <StandardMode /> */}
       {/* <AroundTheBoardMode /> */}
-      <SelectUser />
+      {/* <SelectUser /> */}
       {/* <CricketMode /> */}
       {/* <div className='main'><div className='game-container'>{numberTiles}</div></div> */}
       
