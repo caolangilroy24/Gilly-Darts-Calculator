@@ -5,33 +5,17 @@ interface ScoreBoardProps {
     name: string;
     isCricketMode?: boolean;
     isAroundTheBoardMode?: boolean;
+    scoreArray: {value:number, score:number}[];
+    // testScoreArray: object[];
 }
 
-export default function ScoreBoard({name, isCricketMode=false, isAroundTheBoardMode=false}: ScoreBoardProps) {
-
+export default function ScoreBoard({name, isCricketMode=false, isAroundTheBoardMode=false, scoreArray}: ScoreBoardProps) {
 
     let scoreTile = <div>  </div>
-    let cricketStyle = {width: '40vw'}
-
-    if (isCricketMode) {
-        console.log('TRUUUU')
-        const myArray1: number[] = Array.from({ length: 6 }, (_, index) => index + 15);
-        myArray1.reverse();
-        const cricketScores: JSX.Element[] = [];
-        cricketScores.push(<CricketCount num={50}/>)
-        myArray1.forEach((value)=> {
-            cricketScores.push(<CricketCount num={value}/>)
-        })
-
-        scoreTile = <div className='score-tile' style={cricketStyle}>
-                        <div className='top-score-tile-element'>{name}</div>
-                            <div className='cricket-score-container'>
-                                {cricketScores}
-                            </div>
-                        </div>
-                
-    } else if(isAroundTheBoardMode) {
-        scoreTile = <div className='score-tile' style={cricketStyle}>
+    let aroundBoardStyle = {width: '40vw'}
+    
+    if(isAroundTheBoardMode) {
+        scoreTile = <div className='score-tile' style={aroundBoardStyle}>
                         <div className='top-score-tile-element'>{name}</div>
                             <div className='cricket-score-container'>
                                 placeholder***

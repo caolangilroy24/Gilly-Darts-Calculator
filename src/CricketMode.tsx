@@ -1,18 +1,58 @@
-import React from 'react'
-import ScoreBoard from './ScoreBoard'
+import React, { useState } from 'react'
+import ScoreBoard from './CricketScoreBoard'
 import NumberTile from './NumberTile'
 import Bull from './Bull';
+import CricketScoreBoard from './CricketScoreBoard';
+
+interface ScoreObject {
+    value: number;
+    score: number;
+}
 
 
 export default function CricketMode() {
+    const [scoreArray, setScore ] = useState<ScoreObject[]>(Array.from({ length: 6 }, (_, index) =>  ( {value: (index + 15), score: 3})))
     const myArray1: number[] = Array.from({ length: 6 }, (_, index) => index + 15);
     const numberTiles: JSX.Element[] = [];
-    console.log(myArray1)
+    // Bull needed to be added to scoreArray
+    // const addBullToScoreArray = [...scoreArray, {value: 50, score: 3}]
+    // setScore(addBullToScoreArray)
     myArray1.reverse();
-    console.log(myArray1)
+    function onTileClick(num: number) {
+        let scoreArrayCopy: ScoreObject[] = [... scoreArray]
+        let matchingObject = scoreArrayCopy.find((obj)=> obj.value === num)
+        if (matchingObject) {
+          console.log('before:')
+
+          console.log(matchingObject.score)
+          matchingObject.score = matchingObject.score - 1
+          console.log(matchingObject.score)
+          
+        }
+        setScore(scoreArrayCopy)
+        console.log(scoreArrayCopy)
+
+    }
+
+    function onX3Click(num: number) {
+      let scoreArrayCopy: ScoreObject[] = [... scoreArray]
+      let matchingObject = scoreArrayCopy.find((obj)=> obj.value === num)
+      if (matchingObject) matchingObject.score = matchingObject.score - 3
+      setScore(scoreArrayCopy)
+      console.log(scoreArrayCopy)
+
+    }
+
+    function onX2Click(num: number) {
+      let scoreArrayCopy: ScoreObject[] = [... scoreArray]
+      let matchingObject = scoreArrayCopy.find((obj)=> obj.value === num)
+      if (matchingObject) matchingObject.score = matchingObject.score - 2
+      setScore(scoreArrayCopy)
+      console.log(scoreArrayCopy)
+    }
 
     myArray1.forEach((value)=> {
-            numberTiles.push(<NumberTile num={value}/>)
+            numberTiles.push(<NumberTile num={value} onTileClick={onTileClick} onX3Click={onX3Click} onX2Click={onX2Click}/>)
         })
 
     // let bullStyle = {height: 30vh}};
@@ -21,10 +61,8 @@ export default function CricketMode() {
     
   return (
     <div className='standard-board'>
-        <div className='standard-board-first-row'><ScoreBoard name="Caolan" isCricketMode={true}/> <ScoreBoard name='Dad' isCricketMode={true}/></div>
-        
-      <div className='main'><div className='game-container'><Bull isCricketMode={true} bull='50'/><Bull bull='25' isCricketMode={true}/>{numberTiles}</div></div>
-        
+        <div className='standard-board-first-row'><CricketScoreBoard key='Player 1' name="Caolan" scoreArray={scoreArray}/> <CricketScoreBoard key='Player 2' name='Dad' scoreArray={scoreArray}/></div>
+      <div className='main'><div className='game-container'><Bull isCricketMode={true} bull={50} onX2Click={onX2Click} onTileClick={onTileClick}/><Bull isCricketMode={true} bull={25}/>{numberTiles}</div></div>
     </div>
   )
 }
