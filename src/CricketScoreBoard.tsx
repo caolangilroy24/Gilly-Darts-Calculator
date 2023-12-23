@@ -34,11 +34,13 @@ export default function CricketScoreBoard({scoreArray, name}: CricketScoreBoardP
     return (
     <div className='score-tile-container'>
         <div className='score-tile' style={cricketStyle}>
-                    <div className='top-score-tile-element'>{name}</div>
-                        <div className='cricket-score-container'>
-                            {cricketScores}
-                        </div>
-                    </div>
+            <div className='top-score-tile-element'>{name}
+            </div>
+            <div className='cricket-score-container'>
+                {cricketScores}
+            </div>
+        </div>
+        
     </div>
   )
 }

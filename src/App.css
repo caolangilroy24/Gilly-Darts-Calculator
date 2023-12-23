@@ -266,8 +266,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   flex-direction: column;
   width: 20vw;
   height: 20vh;
@@ -391,7 +390,7 @@
 }
 
 .cricket-score-count{
-  margin: 1vh;
+  /* margin: 1vh; */
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -415,6 +414,7 @@
   padding-left: 2px;
   padding-right: 2px;
   border: #00FF00 1px dashed;
+  height: 9vh;
   /* align-items: end; */
   /* padding-left: 2vw; */
   /* padding-top: 1vh; */
