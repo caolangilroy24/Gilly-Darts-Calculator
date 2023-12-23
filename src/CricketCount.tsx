@@ -14,19 +14,19 @@ export default function CricketCount({num, testScore=3}: CricketCountProps) {
     let output = <div></div>
     let dartIconArray: JSX.Element[] = []
     let remaining = [true, true, true]
-    console.log('DEBUG')
-    console.log(num)
-    console.log(testScore)
+    //quickdebugconsole.log('DEBUG')
+    //quickdebugconsole.log(num)
+    //quickdebugconsole.log(testScore)
     if (testScore===3) remaining = [true, true, true]
     else if (testScore===2) remaining = [true, true, false]
     else if (testScore===1) remaining = [true, false, false]
     else if (testScore===0) remaining = [false, false, false]
-    console.log(remaining)
+    //quickdebugconsole.log(remaining)
     // remaining.forEach((_, index)=> {
-    //     console.log('DEBUG')
-    //     console.log(num)
-    //     console.log(index)
-    //     console.log(testScore)
+    //     //quickdebugconsole.log('DEBUG')
+    //     //quickdebugconsole.log(num)
+    //     //quickdebugconsole.log(index)
+    //     //quickdebugconsole.log(testScore)
     //     if (index >= testScore) remaining[index] = false
     // })
     // for (let i=0; i<testScore; i++) {

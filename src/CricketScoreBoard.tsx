@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import CricketCount from './CricketCount';
+import { GiDart } from 'react-icons/gi'
+
 
 interface CricketScoreBoardProps {
     name: string;
     scoreArray: {value:number, score:number}[];
+    playerTurn: boolean;
+    winner: boolean;
 }
 
     
-export default function CricketScoreBoard({scoreArray, name}: CricketScoreBoardProps) {
+export default function CricketScoreBoard({scoreArray, name, playerTurn, winner}: CricketScoreBoardProps) {
     // let scoreTile = <div>  </div>
     let cricketStyle = {width: '40vw'}
     const myArray1: number[] = Array.from({ length: 6 }, (_, index) => index + 15);
@@ -16,9 +20,9 @@ export default function CricketScoreBoard({scoreArray, name}: CricketScoreBoardP
     useEffect(()=> {
         let newCricketScores: JSX.Element[] = [] 
         let bullMatch = scoreArray.find((obj)=> obj.value === 50)
-        console.log(bullMatch)
-        console.log('@@@@@SCORE ARRAY')
-        console.log(scoreArray)
+        //quickdebugconsole.log(bullMatch)
+        //quickdebugconsole.log('@@@@@SCORE ARRAY')
+        //quickdebugconsole.log(scoreArray)
 
         newCricketScores.push(<CricketCount key='bullScore' num={50} testScore={bullMatch? bullMatch.score: 3}/>)
         myArray1.forEach((value, index) => {
@@ -34,7 +38,14 @@ export default function CricketScoreBoard({scoreArray, name}: CricketScoreBoardP
     return (
     <div className='score-tile-container'>
         <div className='score-tile' style={cricketStyle}>
-            <div className='top-score-tile-element'>{name}
+            {/* <div className='top-score-tile-element'>
+                {name}
+            </div> */}
+            <div className='top-score-tile-element'>
+                {playerTurn && !winner && <div className='dart-icon-contain'><GiDart style={{fontSize: ".7em"}}/></div>}
+                {winner && <p>Winner:</p>}
+                {name}
+                {playerTurn && !winner && <div className='dart-icon-contain'><GiDart style={{fontSize: ".7em"}}/></div>}
             </div>
             <div className='cricket-score-container'>
                 {cricketScores}

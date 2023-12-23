@@ -290,7 +290,7 @@
   /* color: white; */
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
   font-size: 3rem;
 
   width: 20vw;
@@ -308,6 +308,31 @@
   color: #00FF00;
 
 }
+
+.dart-icon-contain{
+  /* Rectangle 7 */
+display: flex;
+box-sizing: border-box;
+/* color: white; */
+align-items: center;
+justify-content: center;
+flex-direction: row;
+
+
+/* background-color: #000000; */
+/* font-family: 'Inconsolata'; */
+font-family: VT323; 
+font-style: normal;
+/* font-weight: 700; */
+/* font-size: 60px; */
+/* line-height: 63px; */
+text-align: center;
+
+color: #00FF00;
+rotate: 45deg;
+
+}
+
 
 .bottom-score-tile-elements {
   /* Rectangle 7 */

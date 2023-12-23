@@ -7,15 +7,15 @@ export default function AroundTheBoardMode() {
     // numberArray.reverse();
     let tilesArray: JSX.Element[] = [];
     function onTileClick() {
-        console.log("tile clicked")
+        //quickdebugconsole.log("tile clicked")
       }
   
     function onX3Click() {
-      console.log("X3 clicked")
+      //quickdebugconsole.log("X3 clicked")
       }
   
     function onX2Click() {
-      console.log("X2 clicked")
+      //quickdebugconsole.log("X2 clicked")
       }
   
     numberArray.forEach((value)=> {

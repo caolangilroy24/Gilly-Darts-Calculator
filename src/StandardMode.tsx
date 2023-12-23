@@ -7,20 +7,20 @@ import Bull from './Bull';
 export default function StandardMode() {
     const myArray1: number[] = Array.from({ length: 20 }, (_, index) => index + 1);
     const numberTiles: JSX.Element[] = [];
-    console.log(myArray1)
+    //quickdebugconsole.log(myArray1)
     myArray1.reverse();
-    console.log(myArray1)
+    //quickdebugconsole.log(myArray1)
 
     function onTileClick() {
-      console.log("tile clicked")
+      //quickdebugconsole.log("tile clicked")
     }
 
   function onX3Click() {
-    console.log("tile clicked")
+    //quickdebugconsole.log("tile clicked")
     }
 
   function onX2Click() {
-    console.log("tile clicked")
+    //quickdebugconsole.log("tile clicked")
     }
 
   myArray1.forEach((value)=> {

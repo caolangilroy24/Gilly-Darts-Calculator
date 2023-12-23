@@ -12,7 +12,7 @@ export default function Bull({bull, isCricketMode=false, onTileClick = () => {},
     const handleOnClick = () => {
         if (bull === 50) onX2Click(50)
         else if (bull === 25) onTileClick(50)
-        console.log('bull clicked')
+        //quickdebugconsole.log('bull clicked')
     }
     let style = {};
     let display:any  = <div></div>
