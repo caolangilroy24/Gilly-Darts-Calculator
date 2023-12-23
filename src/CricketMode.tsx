@@ -128,6 +128,16 @@ export default function CricketMode() {
       // setShotCounter(shotCounter + 1)
     }
 
+
+  }
+  function onMiss() {
+    if (winner === '') {
+      setShotCounter(shotCounter + 1)
+      if (shotCounter >=2) {
+        setShotCounter(0)
+        setPlayer1IsNext(!player1IsNext)
+      }
+    }
   }
 
   tileArray.forEach((value)=> {
@@ -142,6 +152,7 @@ export default function CricketMode() {
     <div className='standard-board'>
         <div className='standard-board-first-row'><CricketScoreBoard key='Player 1' name="Caolan" scoreArray={player1ScoreArray} playerTurn={player1IsNext} winner={player1Wins}/> <CricketScoreBoard key='Player 2' name='Dad' scoreArray={player2ScoreArray} playerTurn={!player1IsNext} winner={player2Wins}/></div>
       <div className='main'><div className='game-container'><Bull isCricketMode={true} bull={50} onX2Click={onX2Click}/><Bull isCricketMode={true} bull={25} onTileClick={onTileClick}/>{numberTiles}</div></div>
+      <div className='standard-board-first-row'><div className='miss' onClick={onMiss}> Miss </div></div>
     </div>
   )
 }
