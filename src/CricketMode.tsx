@@ -19,12 +19,13 @@ export default function CricketMode() {
   const [player1Wins, setPlayer1Wins] = useState<boolean>(false);
   const [player2Wins, setPlayer2Wins] = useState<boolean>(false);
   const [shotCounter, setShotCounter] = useState<number>(0);
+
   const [player1ScoreArray, setPlayer1Score ] = useState<ScoreObject[]>([...initialScoresP1]);
   const [player2ScoreArray, setPlayer2Score ] = useState<ScoreObject[]>([...initialScoresP2]);
   const tileArray: number[] = Array.from({ length: 6 }, (_, index) => index + 15);
   const numberTiles: JSX.Element[] = [];
 
-  useEffect(() => {
+  useEffect(() => {//xing and indeed, 
     // const initialScoreArray = Array.from({ length: 6 }, (_, index) =>  ( {value: (index + 15), score: 3}))
     setPlayer1Score([...player1ScoreArray, {value: 50, score: 3}])
     setPlayer2Score([...player2ScoreArray, {value: 50, score: 3}])

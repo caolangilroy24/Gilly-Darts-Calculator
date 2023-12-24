@@ -1,22 +1,33 @@
 import React from 'react'
 import CricketCount from './CricketCount';
+import { GiDart } from 'react-icons/gi'
+
 
 interface ScoreBoardProps {
     name: string;
     isCricketMode?: boolean;
     isAroundTheBoardMode?: boolean;
     scoreArray?: {value:number, score:number}[];
+    playerTurn?: boolean;
+    winner?: boolean;
+
     // testScoreArray: object[];
 }
 
-export default function ScoreBoard({name, isCricketMode=false, isAroundTheBoardMode=false, scoreArray}: ScoreBoardProps) {
+export default function ScoreBoard({name, isCricketMode=false, isAroundTheBoardMode=false, scoreArray, playerTurn, winner}: ScoreBoardProps) {
 
     let scoreTile = <div>  </div>
     let aroundBoardStyle = {width: '40vw'}
     
     if(isAroundTheBoardMode) {
         scoreTile = <div className='score-tile' style={aroundBoardStyle}>
-                        <div className='top-score-tile-element'>{name}</div>
+                        <div className='top-score-tile-element'>
+                        {playerTurn && !winner && <div className='dart-icon-contain'><GiDart style={{fontSize: ".7em"}}/></div>}
+                            {winner && <p>Winner:</p>}
+                            {name}
+                            {playerTurn && !winner && <div className='dart-icon-contain'><GiDart style={{fontSize: ".7em"}}/></div>}
+                        
+                        </div>
                             <div className='cricket-score-container'>
                                 placeholder***
                             </div>
