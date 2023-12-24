@@ -36,25 +36,25 @@ export default function CricketMode() {
     player1ScoreArray.every((obj)=> {
       if (p1Win) {
         setWinner('Player 1')
-        console.log(winner)
+        //quickdebugconsole.log(winner)
         setPlayer1Wins(true)
       } else if (p2Win) {
         setWinner('Player 2')
         setPlayer2Wins(true)
-        console.log(winner)
+        //quickdebugconsole.log(winner)
       }
     })
   }, [player1ScoreArray, player2ScoreArray])
 
   tileArray.reverse();
   function onTileClick(num: number) {
-    console.log(winner)
+    //quickdebugconsole.log(winner)
     if (winner === '') {
-      console.log('shot counter is ' + shotCounter  + ' and player1IsNext is ' + player1IsNext)
+      //quickdebugconsole.log('shot counter is ' + shotCounter  + ' and player1IsNext is ' + player1IsNext)
       if (shotCounter >= 2) {
         setShotCounter(0)
         setPlayer1IsNext(!player1IsNext)
-        console.log(`after 3: ${shotCounter}`)
+        //quickdebugconsole.log(`after 3: ${shotCounter}`)
       } else {
         setShotCounter(shotCounter + 1)
 
@@ -78,16 +78,16 @@ export default function CricketMode() {
         //quickdebugconsole.log(matchingObject.score)
         
       }
-      console.log(`player1IsNext is ${player1IsNext}`)
-      console.log(`player1ScoreArrayCopy is`)
+      //quickdebugconsole.log(`player1IsNext is ${player1IsNext}`)
+      //quickdebugconsole.log(`player1ScoreArrayCopy is`)
       player1ScoreArrayCopy.forEach((obj)=> console.log(obj))
-      console.log(`player2ScoreArrayCopy is`)
+      //quickdebugconsole.log(`player2ScoreArrayCopy is`)
       player2ScoreArrayCopy.forEach((obj)=> console.log(obj))
       player1IsNext? setPlayer1Score(player1ScoreArrayCopy): setPlayer2Score(player2ScoreArrayCopy)
-      console.log('After update')//quickdebugconsole.log(player1ScoreArrayCopy)
-      console.log(`player1ScoreArrayCopy is`)
+      //quickdebugconsole.log('After update')//quickdebugconsole.log(player1ScoreArrayCopy)
+      //quickdebugconsole.log(`player1ScoreArrayCopy is`)
       player1ScoreArrayCopy.forEach((obj)=> console.log(obj))
-      console.log(`player2ScoreArrayCopy is`)
+      //quickdebugconsole.log(`player2ScoreArrayCopy is`)
       player2ScoreArrayCopy.forEach((obj)=> console.log(obj))
     }
   }

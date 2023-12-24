@@ -33,7 +33,7 @@ export default function StandardMode() {
   return (
     <div className='standard-board'>
         {/* commented out because cricket score is breaking it - will maybe need a seperate cricket scoreboard */}
-        {/* <div className='standard-board-first-row'><ScoreBoard name="Caolan"/><Bull bull='50'/><Bull bull='25'/>  <ScoreBoard name='Dad'/></div> */}
+        <div className='standard-board-first-row'><ScoreBoard name="Caolan"/><Bull bull={50}/><Bull bull={25}/>  <ScoreBoard name='Dad'/></div>
         
       <div className='main'><div className='game-container'>{numberTiles}</div></div>
         

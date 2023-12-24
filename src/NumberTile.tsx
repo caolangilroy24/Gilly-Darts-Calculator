@@ -3,16 +3,18 @@ import React from 'react'
 
 interface NumberTileProps {
     num: number;
+    isHidden?: boolean
     // onTileClick: function name(params:type) {
     onTileClick: (num: number)=>void
     onX2Click: (num: number)=>void
     onX3Click: (num: number)=>void
+
     // }
 }
 
 
-export default function NumberTile({num, onTileClick = () => {}, onX2Click = () => {}, onX3Click = () => {} }: NumberTileProps) {
-
+export default function NumberTile({num, isHidden = false, onTileClick = () => {}, onX2Click = () => {}, onX3Click = () => {} }: NumberTileProps) {
+    if (isHidden) return null;
     const handleTileClick = () => {
         onTileClick(num)
     }
@@ -35,7 +37,7 @@ export default function NumberTile({num, onTileClick = () => {}, onX2Click = () 
     const style = { backgroundColor: colour, fontSize: "3rem" }
     const multipleStyle = { backgroundColor: multipleColour, fontSize: "1.5rem" }
     // function onTileClick() {
-    //     console.log(num)
+    //     //console.log(num)
     // }
 
   return (

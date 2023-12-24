@@ -5,7 +5,7 @@ interface ScoreBoardProps {
     name: string;
     isCricketMode?: boolean;
     isAroundTheBoardMode?: boolean;
-    scoreArray: {value:number, score:number}[];
+    scoreArray?: {value:number, score:number}[];
     // testScoreArray: object[];
 }
 
