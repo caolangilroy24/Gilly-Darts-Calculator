@@ -1,46 +1,17 @@
-# Getting Started with Create React App
+This is a custom built darts calculator and score keeping Application.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+It is currently still in development with the current focus being on the front end. 
 
-## Available Scripts
+The Application currently handles 2 players playing the Cricket Game mode where each player races each other to tick off each number and bull. 
+- You are given a tally of 3 for each number from 15-20, and 3 for Bull, 
+- You have to hit each number 3 times, or hit a double and a single, or one triple. (triples = 3, doubles = 2). You must do the same for Bull where 50 = 2 hits and 25 = 1 hit. 
+- The first player to clear their tally wins. 
 
-In the project directory, you can run:
+Currently I am working on an Around The Board Game mode. Where users start at 1 and race eachother to be the first to hit 20. 
 
-### `npm start`
+Before Christmas I had an over engineered solution which was not fully functional, so next steps are to simplify and redo this game mode. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+The final Game mode, will be Standard 501 darts where the user can input their scores after every turn and will have to check out with a double. For the desktop version of this I will reuse the gameboard component from the cricket mode and add the calculations.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Future iterations of this project will include a user page, scoreboards, a practise mode, will be responsive and will have a database to track games over time.

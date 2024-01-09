@@ -10,13 +10,12 @@ import ChalkBoard from './ChalkBoard'
 
 export default function GameRoutes() {
   return (
-    // <div>Routes</div>
     <Router>
         <Routes>
-        //         <Route path="/standard" element={<StandardMode/>}></Route>
-        //         <Route path="/around" element={<AroundTheBoardMode/>}></Route>
-        //         <Route path="/cricket" element={<CricketMode/>}></Route>
-        //         <Route path="/" element={<ChalkBoard/>}></Route>
+               <Route path="/standard" element={<StandardMode/>}></Route>
+               <Route path="/around" element={<AroundTheBoardMode/>}></Route>
+               <Route path="/cricket" element={<CricketMode/>}></Route>
+               <Route path="/" element={<ChalkBoard/>}></Route>
         </Routes>
     </Router>
   )

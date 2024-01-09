@@ -14,16 +14,13 @@ import SelectUser from './SelectUser';
 import GameRoutes from './GameRoutes';
 
 function App() {
-              
-
-
-  let num:number = 20;
+            
   return (
 
     <div className="App" style={{backgroundImage:`url(${dartsBackground})`,backgroundRepeat:"no-repeat"}}>
       <DartsHeader />
       <GameRoutes />
-
+      {/* Commented out components for development process - to be removed later*/}
       {/* <ScoreBoard name="Caolan"/> */}
       {/* <ChalkBoard /> */}
       {/* <NumberTile num={20}/> */}

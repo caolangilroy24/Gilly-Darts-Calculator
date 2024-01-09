@@ -10,8 +10,6 @@ interface ScoreBoardProps {
     scoreArray?: {value:number, score:number}[];
     playerTurn?: boolean;
     winner?: boolean;
-
-    // testScoreArray: object[];
 }
 
 export default function ScoreBoard({name, isCricketMode=false, isAroundTheBoardMode=false, scoreArray, playerTurn, winner}: ScoreBoardProps) {

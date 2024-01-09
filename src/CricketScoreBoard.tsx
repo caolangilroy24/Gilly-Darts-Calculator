@@ -12,7 +12,6 @@ interface CricketScoreBoardProps {
 
     
 export default function CricketScoreBoard({scoreArray, name, playerTurn, winner}: CricketScoreBoardProps) {
-    // let scoreTile = <div>  </div>
     let cricketStyle = {width: '40vw'}
     const myArray1: number[] = Array.from({ length: 6 }, (_, index) => index + 15);
     myArray1.reverse();
@@ -20,10 +19,6 @@ export default function CricketScoreBoard({scoreArray, name, playerTurn, winner}
     useEffect(()=> {
         let newCricketScores: JSX.Element[] = [] 
         let bullMatch = scoreArray.find((obj)=> obj.value === 50)
-        //quickdebugconsole.log(bullMatch)
-        //quickdebugconsole.log('@@@@@SCORE ARRAY')
-        //quickdebugconsole.log(scoreArray)
-
         newCricketScores.push(<CricketCount key='bullScore' num={50} testScore={bullMatch? bullMatch.score: 3}/>)
         myArray1.forEach((value, index) => {
             let objectMatch = scoreArray.find((obj)=> obj.value === value)
@@ -31,16 +26,11 @@ export default function CricketScoreBoard({scoreArray, name, playerTurn, winner}
             newCricketScores.push(<CricketCount key={keyname} num={value} testScore={objectMatch? objectMatch.score:3}/>)
         })
         setCricketScores(newCricketScores)
-
-        
     }, [scoreArray])
             
     return (
     <div className='score-tile-container'>
         <div className='score-tile' style={cricketStyle}>
-            {/* <div className='top-score-tile-element'>
-                {name}
-            </div> */}
             <div className='top-score-tile-element'>
                 {playerTurn && !winner && <div className='dart-icon-contain'><GiDart style={{fontSize: ".7em"}}/></div>}
                 {winner && <p>Winner:</p>}

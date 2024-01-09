@@ -25,8 +25,7 @@ export default function CricketMode() {
   const tileArray: number[] = Array.from({ length: 6 }, (_, index) => index + 15);
   const numberTiles: JSX.Element[] = [];
 
-  useEffect(() => {//xing and indeed, 
-    // const initialScoreArray = Array.from({ length: 6 }, (_, index) =>  ( {value: (index + 15), score: 3}))
+  useEffect(() => { 
     setPlayer1Score([...player1ScoreArray, {value: 50, score: 3}])
     setPlayer2Score([...player2ScoreArray, {value: 50, score: 3}])
   }, [])
@@ -37,58 +36,41 @@ export default function CricketMode() {
     player1ScoreArray.every((obj)=> {
       if (p1Win) {
         setWinner('Player 1')
-        //quickdebugconsole.log(winner)
         setPlayer1Wins(true)
       } else if (p2Win) {
         setWinner('Player 2')
         setPlayer2Wins(true)
-        //quickdebugconsole.log(winner)
       }
     })
   }, [player1ScoreArray, player2ScoreArray])
 
   tileArray.reverse();
   function onTileClick(num: number) {
-    //quickdebugconsole.log(winner)
     if (winner === '') {
-      //quickdebugconsole.log('shot counter is ' + shotCounter  + ' and player1IsNext is ' + player1IsNext)
       if (shotCounter >= 2) {
         setShotCounter(0)
         setPlayer1IsNext(!player1IsNext)
-        //quickdebugconsole.log(`after 3: ${shotCounter}`)
       } else {
         setShotCounter(shotCounter + 1)
-
       }
+
       let player1ScoreArrayCopy: ScoreObject[] = [... player1ScoreArray]
       let player2ScoreArrayCopy: ScoreObject[] = [... player2ScoreArray]
       let matchingObject: ScoreObject | undefined;
-      // let matchingObject = player1IsNext? player1ScoreArrayCopy.find((obj)=> obj.value === num): player2ScoreArrayCopy.find((obj)=> obj.value === num)
+
       if (player1IsNext) {
         matchingObject = player1ScoreArrayCopy.find((obj)=> obj.value === num);
       } else {
         matchingObject = player2ScoreArrayCopy.find((obj)=> obj.value === num)
       }
 
-      // let matchingObject = player1ScoreArrayCopy.find((obj)=> obj.value === num)
       if (matchingObject && matchingObject.score > 0) {
-        //quickdebugconsole.log('before:')
-
-        //quickdebugconsole.log(matchingObject.score)
-        matchingObject.score = matchingObject.score - 1
-        //quickdebugconsole.log(matchingObject.score)
-        
+        matchingObject.score = matchingObject.score - 1        
       }
-      //quickdebugconsole.log(`player1IsNext is ${player1IsNext}`)
-      //quickdebugconsole.log(`player1ScoreArrayCopy is`)
       player1ScoreArrayCopy.forEach((obj)=> console.log(obj))
-      //quickdebugconsole.log(`player2ScoreArrayCopy is`)
       player2ScoreArrayCopy.forEach((obj)=> console.log(obj))
       player1IsNext? setPlayer1Score(player1ScoreArrayCopy): setPlayer2Score(player2ScoreArrayCopy)
-      //quickdebugconsole.log('After update')//quickdebugconsole.log(player1ScoreArrayCopy)
-      //quickdebugconsole.log(`player1ScoreArrayCopy is`)
       player1ScoreArrayCopy.forEach((obj)=> console.log(obj))
-      //quickdebugconsole.log(`player2ScoreArrayCopy is`)
       player2ScoreArrayCopy.forEach((obj)=> console.log(obj))
     }
   }
@@ -104,12 +86,10 @@ export default function CricketMode() {
       
       let player1ScoreArrayCopy: ScoreObject[] = [... player1ScoreArray]
       let player2ScoreArrayCopy: ScoreObject[] = [... player2ScoreArray]
-      // let matchingObject = player1ScoreArrayCopy.find((obj)=> obj.value === num)
       let matchingObject = player1IsNext? player1ScoreArrayCopy.find((obj)=> obj.value === num): player2ScoreArrayCopy.find((obj)=> obj.value === num)
 
       if (matchingObject && matchingObject.score > 0) matchingObject.score = matchingObject.score - 3
       player1IsNext? setPlayer1Score(player1ScoreArrayCopy): setPlayer2Score(player2ScoreArrayCopy)
-      //quickdebugconsole.log(player1ScoreArrayCopy)
     }
   }
 
@@ -125,8 +105,6 @@ export default function CricketMode() {
       let matchingObject = player1IsNext? player1ScoreArrayCopy.find((obj)=> obj.value === num): player2ScoreArrayCopy.find((obj)=> obj.value === num)
       if (matchingObject && matchingObject.score > 0) matchingObject.score = matchingObject.score - 2
       player1IsNext? setPlayer1Score(player1ScoreArrayCopy): setPlayer2Score(player2ScoreArrayCopy)
-      //quickdebugconsole.log(player1ScoreArrayCopy)
-      // setShotCounter(shotCounter + 1)
     }
 
 
@@ -144,10 +122,6 @@ export default function CricketMode() {
   tileArray.forEach((value)=> {
           numberTiles.push(<NumberTile num={value} onTileClick={onTileClick} onX3Click={onX3Click} onX2Click={onX2Click}/>)
       })
-
-  // let bullStyle = {height: 30vh}};
-
-
   
   return (
     <div className='standard-board'>

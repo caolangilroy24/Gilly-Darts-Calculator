@@ -4,12 +4,10 @@ import React from 'react'
 interface NumberTileProps {
     num: number;
     isHidden?: boolean
-    // onTileClick: function name(params:type) {
     onTileClick: (num: number)=>void
     onX2Click: (num: number)=>void
     onX3Click: (num: number)=>void
 
-    // }
 }
 
 
@@ -36,9 +34,6 @@ export default function NumberTile({num, isHidden = false, onTileClick = () => {
     }
     const style = { backgroundColor: colour, fontSize: "3rem" }
     const multipleStyle = { backgroundColor: multipleColour, fontSize: "1.5rem" }
-    // function onTileClick() {
-    //     //console.log(num)
-    // }
 
   return (
     <div key={num} className='number-tile'>

@@ -3,7 +3,7 @@ import ScoreBoard from './ScoreBoard'
 import NumberTile from './NumberTile'
 import Bull from './Bull';
 
-
+// TODO: Complete this Game Mode once the other game modes are complete.
 export default function StandardMode() {
     const myArray1: number[] = Array.from({ length: 20 }, (_, index) => index + 1);
     const numberTiles: JSX.Element[] = [];
