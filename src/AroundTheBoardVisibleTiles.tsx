@@ -15,10 +15,10 @@ export default function AroundTheBoardVisibleTiles({current = 1, onTileClick, on
     const numArray: number[] = Array.from({ length: 20 }, (_, index) => index + 1);
     useEffect(() => {
         let tileArrayInitial = [... tileArray];
-        for (current; current < current + 3; current++) {
+        for (let i = current; i < current + 3; i++) {
             tileArrayInitial.push(
                 <NumberTile
-                    num={current}
+                    num={i}
                     isHidden={false}
                     onTileClick={onTileClick ? onTileClick : () => {}}
                     onX3Click={onX3Click ? onX3Click : () => {}}
