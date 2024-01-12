@@ -48,7 +48,8 @@ export default function AroundTheBoardMode() {
 
         <div className='main'>
             <div className='game-container'>
-                <AroundTheBoardVisibleTiles current={player1Position} onTileClick={onTileClick} onX2Click={onX2Click} onX3Click={onX3Click}/>
+                {player1IsNext &&<AroundTheBoardVisibleTiles current={player1Position} onTileClick={onTileClick} onX2Click={onX2Click} onX3Click={onX3Click}/>}
+                {!player1IsNext &&<AroundTheBoardVisibleTiles current={player2Position} onTileClick={onTileClick} onX2Click={onX2Click} onX3Click={onX3Click}/>}
 
             </div>
         </div>
