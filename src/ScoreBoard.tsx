@@ -6,6 +6,7 @@ import { GiDart } from 'react-icons/gi'
 interface ScoreBoardProps {
     name: string;
     score?: number;
+    scoreBefore?: number;
     isCricketMode?: boolean;
     isAroundTheBoardMode?: boolean;
     scoreArray?: {value:number, score:number}[];
@@ -13,7 +14,7 @@ interface ScoreBoardProps {
     winner?: boolean;
 }
 
-export default function ScoreBoard({name, score, isCricketMode=false, isAroundTheBoardMode=false, scoreArray, playerTurn, winner}: ScoreBoardProps) {
+export default function ScoreBoard({name, score, scoreBefore, isCricketMode=false, isAroundTheBoardMode=false, scoreArray, playerTurn, winner}: ScoreBoardProps) {
 
     let scoreTile = <div>  </div>
     let aroundBoardStyle = {width: '40vw'}
@@ -33,7 +34,13 @@ export default function ScoreBoard({name, score, isCricketMode=false, isAroundTh
                         </div>
     } else { 
         scoreTile = <div className='score-tile'>
-        <div className='top-score-tile-element'>{name} - {score}
+        <div className='top-score-tile-element'>
+            {playerTurn && !winner && <div className='dart-icon-contain'><GiDart style={{fontSize: ".7em"}}/></div>}
+                {winner && <p>Winner:</p>}
+
+                {name} - {score}
+                {/* <br></br>Score Before: {scoreBefore} */}
+            {playerTurn && !winner && <div className='dart-icon-contain'><GiDart style={{fontSize: ".7em"}}/></div>}
                 
                 </div>
                 <div className='score-checkout'>Checkout:</div>

@@ -10,8 +10,16 @@ interface BullProps {
 
 export default function Bull({bull, isCricketMode=false, onTileClick = () => {}, onX2Click = () => {}}: BullProps) {
     const handleOnClick = () => {
-        if (bull === 50) onX2Click(50)
-        else if (bull === 25) onTileClick(50)
+        if (isCricketMode) {
+            if (bull === 50) onX2Click(50)
+            else if (bull === 25) onTileClick(50)
+        } else {
+            console.log('bull clicked')
+            console.log(bull)
+            onTileClick(bull)
+        }
+        
+        
     }
     let style = {};
     let display:any  = <div></div> //this is a hack to get around the fact that display can be a number or a react icon I will fix this later
