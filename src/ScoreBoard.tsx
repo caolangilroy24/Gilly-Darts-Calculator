@@ -5,6 +5,7 @@ import { GiDart } from 'react-icons/gi'
 
 interface ScoreBoardProps {
     name: string;
+    score?: number;
     isCricketMode?: boolean;
     isAroundTheBoardMode?: boolean;
     scoreArray?: {value:number, score:number}[];
@@ -12,7 +13,7 @@ interface ScoreBoardProps {
     winner?: boolean;
 }
 
-export default function ScoreBoard({name, isCricketMode=false, isAroundTheBoardMode=false, scoreArray, playerTurn, winner}: ScoreBoardProps) {
+export default function ScoreBoard({name, score, isCricketMode=false, isAroundTheBoardMode=false, scoreArray, playerTurn, winner}: ScoreBoardProps) {
 
     let scoreTile = <div>  </div>
     let aroundBoardStyle = {width: '40vw'}
@@ -32,7 +33,7 @@ export default function ScoreBoard({name, isCricketMode=false, isAroundTheBoardM
                         </div>
     } else { 
         scoreTile = <div className='score-tile'>
-        <div className='top-score-tile-element'>{name}
+        <div className='top-score-tile-element'>{name} - {score}
                 
                 </div>
                 <div className='score-checkout'>Checkout:</div>
