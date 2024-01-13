@@ -15,38 +15,45 @@ export default function StandardMode() {
     const [player1IsNext, setPlayer1IsNext] = useState(true)
     const [scoreBeforeTurn, setScoreBeforeTurn] = useState(501);
     const [scoreThisTurn, setScoreThisTurn] = useState(0);
-    //quickdebugconsole.log(myArray1)
+    
+    // let possibleCheckoutsIntArray: number[] = [];
+    // let possibleScoreFromOneDartIntArray: number[] = [];
+    // const mostPopularCheckouts = [50, 20, 16, 18, 14, 10, 12, 8, 6, 4, 2]
+    // for (let i = 0; i <= 60; i++) {
+    //   if  (!possibleScoreFromOneDartIntArray.includes(i)){
+    //     if (i <= 20 && !possibleScoreFromOneDartIntArray.includes(i)) {
+    //       possibleScoreFromOneDartIntArray.push(i);
+    //       // possibleScoreFromOneDart.push(`S${i} `)
+    //     }
+    //     if (i  % 2 === 0 && i <= 40 && !possibleScoreFromOneDartIntArray.includes(i)) {
+    //       // possibleCheckoutsArray.push(`D${i/2}`);
+    //       possibleCheckoutsIntArray.push(i);
+    //       possibleScoreFromOneDartIntArray.push(i);
+    //       // possibleScoreFromOneDart.push(`D${i/2}`);
+    //     }
+    //     if (i % 3 === 0 && !possibleScoreFromOneDartIntArray.includes(i)) {
+    //       // possibleScoreFromOneDart.push(`T${i/3}`)
+    //       possibleScoreFromOneDartIntArray.push(i);}
+    //   }
+    // }
+
+    // possibleScoreFromOneDartIntArray.push(50);
+    // possibleScoreFromOneDartIntArray.push(25)
+    // console.log('possibleCheckoutsIntArray ' +possibleCheckoutsIntArray)
+    // console.log('possibleScoreFromOneDartIntArray ' +possibleScoreFromOneDartIntArray)
+
     myArray1.reverse();
-    //quickdebugconsole.log(myArray1)
 
     function handleDartThrown(value: number, checkoutAllowedDoubleHit: boolean = false) {
       if (player1Wins) return 0
-      console.log('\n\n\n==========shotCounter ' +shotCounter)
-      console.log('player1IsNext ' +player1IsNext)
-      console.log('player1Score ' +player1Score)
-      console.log('player2Score ' +player2Score)
-
-      // if (shotCounter === 0) {
-      //   console.log('\n@@@@@@@@@@@SetScoreBeforeTurn is being Called')
-      //   setScoreBeforeTurn(player1IsNext? player1Score : player2Score)
-      // }
-      console.log('scorebeforeTurn ' +scoreBeforeTurn)
-
       let newShotCounter = shotCounter + 1;
-      console.log(newShotCounter)
       setShotCounter(newShotCounter);
-      // console.log("\n\n\nhandleDart clicked")
-      // console.log('newShotCounter ' +newShotCounter)
-      // console.log(value)
-      // console.log(scoreThisTurn)
       const scoreThisTurnCopy = scoreThisTurn + value
       setScoreThisTurn(scoreThisTurnCopy);
-      console.log('scoreThisTurn ' +scoreThisTurnCopy)
       let nextScore = player1IsNext? player1Score - value : player2Score - value;
       player1IsNext? setPlayer1Score(nextScore) : setPlayer2Score(nextScore)
       if (nextScore === 0 && checkoutAllowedDoubleHit) player1IsNext? setPlayer1Wins(true) : setPlayer2Wins(true);
       else if (nextScore === 0 && !checkoutAllowedDoubleHit || nextScore < 0) {
-        console.log('\n\n\n\n@@@@@@@@@@@@bust')
         player1IsNext? setPlayer1Score(scoreBeforeTurn) : setPlayer2Score(scoreBeforeTurn);
         setScoreBeforeTurn(!player1IsNext? player1Score : player2Score)
         setScoreThisTurn(0);
@@ -64,37 +71,61 @@ export default function StandardMode() {
     }
 
     function onTileClick(value:number) {
-      // if (player1Wins) return 0
-
-      // console.log("tile clicked")
-      // console.log(value)
-      // let nextScore = player1Score - value
-      // setPlayer1Score(nextScore)
-      // if (nextScore === 0) setPlayer1Wins(true)
       handleDartThrown(value)
-
-      //quickdebugconsole.log("tile clicked")
     }
 
   function onX3Click(value:number) {
-    console.log("x3 clicked")
     handleDartThrown(value*3)
-      // console.log(value*3)
-      // setPlayer1Score(player1Score - (value*3))
-    //quickdebugconsole.log("tile clicked")
   }
 
   function onX2Click(value:number) {
-    console.log("x2 clicked")
-      // console.log(value*2)
-      // setPlayer1Score(player1Score - (value*2))
       handleDartThrown(value * 2, true)
-    //quickdebugconsole.log("tile clicked")
     }
 
   myArray1.forEach((value)=> {
           numberTiles.push(<NumberTile num={value} onTileClick={onTileClick} onX3Click={onX3Click} onX2Click={onX2Click}/>)
       })
+
+    // function calculateCheckouts(currentScore: number, remainingDarts: number = 1): string[] {
+    //   // const possibleCheckouts: string[] = [];
+    //   let possibleCheckouts = [];
+    //   if (remainingDarts === 3) {
+    //     // Check if any combination of two darts from possibleScoreFromOneDartIntArray subtracted from currentScore will leave you with a score that is in mostPopularCheckouts;
+    //     for (let i = 0; i < possibleScoreFromOneDartIntArray.length; i++) {
+    //         for (let j = 0; j < possibleScoreFromOneDartIntArray.length; j++) {
+    //             const score1 = possibleScoreFromOneDartIntArray[i];
+    //             const score2 = possibleScoreFromOneDartIntArray[j];
+    //             const remainingScore = currentScore - score1 - score2;
+    //             if (mostPopularCheckouts.includes((remainingScore === 50)? remainingScore: remainingScore/2)) {
+    //                 possibleCheckouts.push(`PossibleScores ${score1}, ${score2} Checkout${remainingScore}`);
+    //             }
+    //         }
+    //     }
+    // } else if( remainingDarts === 2) {
+
+    //     // check if any possible score from possibleScoreFromOneDartIntArray subtracted from currentScore will leave you with a score that is in mostPopularCheckouts;
+    //     possibleScoreFromOneDartIntArray.forEach((score) => {
+    //       const remainingScore = currentScore - score;
+    //       if (mostPopularCheckouts.includes((remainingScore === 50)? remainingScore: remainingScore/2)) {
+    //         possibleCheckouts.push(`PossibleScore ${score} Checkout${remainingScore}`);
+    //       }
+    //     });
+    //   }
+
+    //   if (remainingDarts === 1 && (currentScore <= 40 && currentScore % 2 === 0 || currentScore === 50)) {
+    //     //checkOutAvailable
+    //     if (currentScore === 50) possibleCheckouts.push(`Bull`);
+    //     else possibleCheckouts.push(`D${currentScore / 2}`);
+    //   }
+
+    //   return possibleCheckouts;
+    // }
+
+    // // Example usage:
+    // const userScore = 60;
+    //   const possibleCheckouts = calculateCheckouts(userScore, 3);
+      
+    //   console.log(`Possible checkouts for ${userScore}:`, possibleCheckouts);
 
     // myArray1.forEach((value)=> {
     //         numberTiles.push(<NumberTile num={value}/>)
@@ -102,7 +133,7 @@ export default function StandardMode() {
   return (
     <div className='standard-board'>
         {/* commented out because cricket score is breaking it - will maybe need a seperate cricket scoreboard */}
-        <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name="Caolan" score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name='Dad' playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins}/></div>
+        <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name="Caolan" score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins} shotCounter={shotCounter}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name='Dad' playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins} shotCounter={shotCounter}/></div>
         
       <div className='main'><div className='game-container'>{numberTiles}</div></div>
         
