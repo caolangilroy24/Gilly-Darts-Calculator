@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import CricketCount from './CricketCount';
 import { GiDart } from 'react-icons/gi'
 
 
@@ -19,98 +18,142 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
     const [checkoutSuggestion, setCheckoutSuggestion] = useState<string>('')
     let possibleCheckoutsIntArray: number[] = [];
     let possibleScoreFromOneDartIntArray: number[] = [];
-    const mostPopularCheckouts = [25, 20, 16, 18, 14, 10, 12, 8, 6, 4, 2]
-    for (let i = 0; i <= 60; i++) {
+    const mostPopularCheckouts = [20, 16, 18, 25, 14, 10, 12, 8, 6, 4, 2]; // 18, 14, 8, 6, 4, 2]
+    const [useExtraDart, setUseExtraDart] = useState(false);
+    for (let i = 1; i <= 60; i++) {
       if  (!possibleScoreFromOneDartIntArray.includes(i)){
         if (i <= 20 && !possibleScoreFromOneDartIntArray.includes(i)) {
           possibleScoreFromOneDartIntArray.push(i);
-          // possibleScoreFromOneDart.push(`S${i} `)
         }
         if (i  % 2 === 0 && i <= 40 && !possibleScoreFromOneDartIntArray.includes(i)) {
-          // possibleCheckoutsArray.push(`D${i/2}`);
           possibleCheckoutsIntArray.push(i);
           possibleScoreFromOneDartIntArray.push(i);
-          // possibleScoreFromOneDart.push(`D${i/2}`);
         }
         if (i % 3 === 0 && !possibleScoreFromOneDartIntArray.includes(i)) {
-          // possibleScoreFromOneDart.push(`T${i/3}`)
           possibleScoreFromOneDartIntArray.push(i);}
       }
     }
+    
 
     useEffect(()=> {
-        console.log(3-shotCounter)
-        let remainingShots = 3-shotCounter
         if (score <= 170) {
-            let possibleCheckouts = calculateCheckouts(score, remainingShots);
-            let checkoutSuggestion = possibleCheckouts[0];
-            setCheckoutSuggestion(checkoutSuggestion)
+          console.log('useEffect  has been called ')
+            let possibleCheckouts = calculateCheckouts(score, shotCounter);
+            if (possibleCheckouts) {
+              let checkoutSuggestion = possibleCheckouts[0];
+              setCheckoutSuggestion(checkoutSuggestion)
+            } else {
+              setCheckoutSuggestion('')
+            }
              console.log(`Possible checkouts for ${score}:`, possibleCheckouts);
 
         }
-    }, [score])
-
-
+    }, [score, useExtraDart])
 
     possibleScoreFromOneDartIntArray.push(50);
     possibleScoreFromOneDartIntArray.push(25)
-    // console.log('possibleCheckoutsIntArray ' +possibleCheckoutsIntArray)
-    // console.log('possibleScoreFromOneDartIntArray ' +possibleScoreFromOneDartIntArray)
+    
+    function isPreferredCheckout(score: number): boolean {
+      if (mostPopularCheckouts.includes(score/2)) {
+        console.log('score/2'+ score/2)
+        console.log(true)
+        return true;
+      } else {
+        return false;
+      }
+    }
 
+    function isNotPreferredCheckout(score: number): boolean {
+      if (score <= 40 && score % 2 === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
 
-    function calculateCheckouts(currentScore: number, remainingDarts: number = 1): string[] {
-        // const possibleCheckouts: string[] = [];
-        console.log('remaining' + remainingDarts)
-        let possibleCheckouts = [];
+    function handleExtraDartRequest() {
+      setUseExtraDart(!useExtraDart)
+    }
+
+    function convertScoreToDartsDisplay(score: number, isCheckout=false): string {
+      if (isCheckout) {
+        if (score === 50) {
+          return 'Bull'
+        } else {
+          return `D${score/2}`
+        }
+      } else {
+        if (score === 50) {
+          return 'Bull'
+        } else if (score > 20 && score % 3 === 0) {
+          return `T${score/3}`
+        } else if (score > 20 && score % 2 === 0) {
+          return `D${score/2}`
+        }  else {
+          return `S${score}`
+        }
+      }
+      
+    }
+
+    function possibleTwoDartFinishes(currentScore: number): string[] {
+      // check if any possible score from possibleScoreFromOneDartIntArray subtracted from currentScore will leave you with a score that is in mostPopularCheckouts;
         let checkoutString = '';
-
-        if (remainingDarts === 1 && (currentScore <= 40 && currentScore % 2 === 0 || currentScore === 50)) {
-            //checkOutAvailable
-            if (currentScore === 50) possibleCheckouts.push(`Bull`);
-            else possibleCheckouts.push(`D${currentScore / 2}`);
-        }
-
-        if (remainingDarts === 3) {
-          // Check if any combination of two darts from possibleScoreFromOneDartIntArray subtracted from currentScore will leave you with a score that is in mostPopularCheckouts;
-          for (let i = 0; i < possibleScoreFromOneDartIntArray.length; i++) {
-              for (let j = 0; j < possibleScoreFromOneDartIntArray.length; j++) {
-                  const score1 = possibleScoreFromOneDartIntArray[i];
-                  const score2 = possibleScoreFromOneDartIntArray[j];
-                  const remainingScore = currentScore - score1 - score2;
-                  console.log('remainingScore ' + remainingScore)
-
-                  if (remainingScore !== 50) checkoutString = 'D'
-                  if (mostPopularCheckouts.includes((remainingScore === 50)? remainingScore: remainingScore/2)) {
-                      possibleCheckouts.push(`${score1}, ${score2} ${checkoutString}${remainingScore}`);
-                  }
-              }
+        let possibleCheckouts: string[] = []
+        console.log('possibleScoreFromOneDartIntArray'+ possibleScoreFromOneDartIntArray)
+        possibleScoreFromOneDartIntArray.forEach((score) => {
+          
+          const remainingScore = currentScore - score;
+          const secondLastDartString = convertScoreToDartsDisplay(score);
+         
+          if (isPreferredCheckout(remainingScore)) {
+            console.log('remainingScore'+ remainingScore)
+            checkoutString = convertScoreToDartsDisplay(remainingScore);
+            possibleCheckouts.push(` ${secondLastDartString} ${checkoutString}`);
           }
-      } else if( remainingDarts === 2) {
-  
-          // check if any possible score from possibleScoreFromOneDartIntArray subtracted from currentScore will leave you with a score that is in mostPopularCheckouts;
-          possibleScoreFromOneDartIntArray.forEach((score) => {
-            const remainingScore = currentScore - score;
-            console.log('remainingScore ' + remainingScore)
-            if (remainingScore !== 50) {
-               checkoutString = 'D'
-            }
-            if (mostPopularCheckouts.includes((remainingScore === 50)? remainingScore: remainingScore/2)) {
-              possibleCheckouts.push(` ${score} ${checkoutString}${remainingScore/2}`);
-            }
-          });
-        }
-        
+        });
         return possibleCheckouts;
       }
-  
-      // Example usage:
-    //   const userScore = 70;
-    //     const possibleCheckouts = calculateCheckouts(userScore, 3);
+
+      function possibleThreeDartFinishes(currentScore: number): string[] {
+        let possibleCheckouts: string[] = []
+
+            // Check if any combination of two darts from possibleScoreFromOneDartIntArray subtracted from currentScore will leave you with a score that is in mostPopularCheckouts;
+            for (let i = 0; i < possibleScoreFromOneDartIntArray.length; i++) {
+                for (let j = 0; j < possibleScoreFromOneDartIntArray.length; j++) {
+                    const score1 = possibleScoreFromOneDartIntArray[i];
+                    const score2 = possibleScoreFromOneDartIntArray[j];
+                    const secondLastDartString = convertScoreToDartsDisplay(score2);
+                    const thirdLastDartString = convertScoreToDartsDisplay(score1);
+                    const remainingScore = currentScore - score1 - score2;
+                    if (isPreferredCheckout(remainingScore)) {
+                      const checkoutString = convertScoreToDartsDisplay(remainingScore, true);
+                      possibleCheckouts.push(`${thirdLastDartString}, ${secondLastDartString} ${checkoutString}`);
+                    }
+                }
+            }
+            return possibleCheckouts;
+      }
+
+      function calculateCheckouts(currentScore: number, shotCount: number = 1): string[] {
+        let possibleCheckouts: string[] = [];
         
-        // setCheckoutSuggestion()
-  
-
-
+        if (isPreferredCheckout(currentScore)) {
+          let checkoutString = '';
+          checkoutString = convertScoreToDartsDisplay(currentScore, true);
+          possibleCheckouts.push(`${checkoutString}`);
+        } else if (isNotPreferredCheckout(currentScore) && useExtraDart && shotCount > 1){
+            possibleCheckouts = possibleTwoDartFinishes(currentScore);
+        } else if (isNotPreferredCheckout(currentScore)){
+          possibleCheckouts.push(`D${currentScore/2}`);
+        } else {
+          possibleCheckouts = possibleTwoDartFinishes(currentScore);
+          if (possibleCheckouts.length === 0 || useExtraDart) {
+            possibleCheckouts = possibleThreeDartFinishes(currentScore);
+          } 
+        }
+      return possibleCheckouts
+    }
 
     let scoreTile = <div>  </div>
     let aroundBoardStyle = {width: '40vw'}
@@ -135,11 +178,10 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
                 {winner && <p>Winner:</p>}
 
                 {name} - {score}
-                {/* <br></br>Score Before: {scoreBefore} */}
             {playerTurn && !winner && <div className='dart-icon-contain'><GiDart style={{fontSize: ".7em"}}/></div>}
                 
                 </div>
-                <div className='score-checkout'>Checkout:</div>
+                <div className='score-checkout'>Checkout: <button onClick={handleExtraDartRequest}>use extra dart</button></div>
                 <div className='bottom-score-tile-elements'>{checkoutSuggestion}
                 </div>
         </div>

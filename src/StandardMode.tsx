@@ -11,7 +11,8 @@ export default function StandardMode() {
     const [player1Wins, setPlayer1Wins] = useState<boolean>(false)
     const [player2Score, setPlayer2Score] = useState<number>(501);
     const [player2Wins, setPlayer2Wins] = useState<boolean>(false)
-    const [shotCounter, setShotCounter] = useState(0)
+    const [shotCounter, setShotCounter] = useState(3)
+    // const [shotCounter, setShotCounter] = useState(0)
     const [player1IsNext, setPlayer1IsNext] = useState(true)
     const [scoreBeforeTurn, setScoreBeforeTurn] = useState(501);
     const [scoreThisTurn, setScoreThisTurn] = useState(0);
@@ -46,7 +47,7 @@ export default function StandardMode() {
 
     function handleDartThrown(value: number, checkoutAllowedDoubleHit: boolean = false) {
       if (player1Wins) return 0
-      let newShotCounter = shotCounter + 1;
+      let newShotCounter = shotCounter - 1;
       setShotCounter(newShotCounter);
       const scoreThisTurnCopy = scoreThisTurn + value
       setScoreThisTurn(scoreThisTurnCopy);
@@ -57,14 +58,14 @@ export default function StandardMode() {
         player1IsNext? setPlayer1Score(scoreBeforeTurn) : setPlayer2Score(scoreBeforeTurn);
         setScoreBeforeTurn(!player1IsNext? player1Score : player2Score)
         setScoreThisTurn(0);
-        setShotCounter(0);
+        setShotCounter(3);
         setPlayer1IsNext(!player1IsNext);
       }
-      if (newShotCounter >= 3){
+      if (newShotCounter <= 0){
         setScoreBeforeTurn(!player1IsNext? player1Score : player2Score)
         
         setScoreThisTurn(0);
-        setShotCounter(0);
+        setShotCounter(3);
         setPlayer1IsNext(!player1IsNext);
       }
 
