@@ -20,7 +20,7 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
     let possibleScoreFromOneDartIntArray: number[] = [];
     const mostPopularCheckouts = [20, 16, 18, 25, 14, 10, 12, 8, 6, 4, 2]; // 18, 14, 8, 6, 4, 2]
     const [useExtraDart, setUseExtraDart] = useState(false);
-    for (let i = 1; i <= 60; i++) {
+    for (let i = 60; i >= 1; i--) {
       if  (!possibleScoreFromOneDartIntArray.includes(i)){
         if (i <= 20 && !possibleScoreFromOneDartIntArray.includes(i)) {
           possibleScoreFromOneDartIntArray.push(i);
