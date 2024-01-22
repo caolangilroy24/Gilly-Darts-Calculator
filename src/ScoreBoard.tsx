@@ -105,10 +105,12 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
           
           const remainingScore = currentScore - score;
           const secondLastDartString = convertScoreToDartsDisplay(score);
-         
+          console.log('remainingScore inside the check '+ remainingScore)
+          console.log('currentScore inside the check '+ currentScore)
+          console.log(' possible score inside the check '+ score)
           if (isPreferredCheckout(remainingScore)) {
-            console.log('remainingScore'+ remainingScore)
-            checkoutString = convertScoreToDartsDisplay(remainingScore);
+            console.log('remainingScore inside the check '+ remainingScore)
+            checkoutString = convertScoreToDartsDisplay(remainingScore, true);
             possibleCheckouts.push(` ${secondLastDartString} ${checkoutString}`);
           }
         });
