@@ -16,6 +16,20 @@ export default function StandardMode() {
     const [player1IsNext, setPlayer1IsNext] = useState(true)
     const [scoreBeforeTurn, setScoreBeforeTurn] = useState(501);
     const [scoreThisTurn, setScoreThisTurn] = useState(0);
+    const [player1Name, setPlayer1Name] = useState('');
+    const [player2Name, setPlayer2Name] = useState('');
+    const [hideSelectUser, setHideSelectUser] = useState(false);
+
+    function selectUser(name: string, player1: boolean) {
+      if (player1) {
+        setPlayer1Name(name);
+      } else {
+        setPlayer2Name(name);
+      }
+      if (player1Name && player2Name) {
+        setHideSelectUser(true);
+      }
+    }
     
     // let possibleCheckoutsIntArray: number[] = [];
     // let possibleScoreFromOneDartIntArray: number[] = [];
@@ -72,7 +86,8 @@ export default function StandardMode() {
     }
 
     function onTileClick(value:number) {
-      handleDartThrown(value)
+      if (value === 50) handleDartThrown(value, true)
+      else handleDartThrown(value)
     }
 
   function onX3Click(value:number) {
