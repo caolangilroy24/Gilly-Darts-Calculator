@@ -18,7 +18,7 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
     const [checkoutSuggestion, setCheckoutSuggestion] = useState<string>('')
     let possibleCheckoutsIntArray: number[] = [];
     let possibleScoreFromOneDartIntArray: number[] = [];
-    const mostPopularCheckouts = [20, 16, 18, 25, 14, 10, 12, 8, 6, 4, 2]; // 18, 14, 8, 6, 4, 2]
+    const mostPopularCheckouts = [20, 16, 18, 25]; // 18, 14, 8, 6, 4, 2]14, 10, 12, 8, 6, 4, 2
     const [useExtraDart, setUseExtraDart] = useState(false);
     for (let i = 60; i >= 1; i--) {
       if  (!possibleScoreFromOneDartIntArray.includes(i)){
