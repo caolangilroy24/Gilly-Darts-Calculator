@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import ScoreBoard from './ScoreBoard'
 import NumberTile from './NumberTile'
 import Bull from './Bull';
+import SelectUser from './SelectUser';
 
-// TODO: Complete this Game Mode once the other game modes are complete.
 export default function StandardMode() {
     const myArray1: number[] = Array.from({ length: 20 }, (_, index) => index + 1);
     const numberTiles: JSX.Element[] = [];
@@ -12,50 +12,25 @@ export default function StandardMode() {
     const [player2Score, setPlayer2Score] = useState<number>(501);
     const [player2Wins, setPlayer2Wins] = useState<boolean>(false)
     const [shotCounter, setShotCounter] = useState(3)
-    // const [shotCounter, setShotCounter] = useState(0)
     const [player1IsNext, setPlayer1IsNext] = useState(true)
     const [scoreBeforeTurn, setScoreBeforeTurn] = useState(501);
     const [scoreThisTurn, setScoreThisTurn] = useState(0);
     const [player1Name, setPlayer1Name] = useState('');
     const [player2Name, setPlayer2Name] = useState('');
-    const [hideSelectUser, setHideSelectUser] = useState(false);
+    const [showSelectUser, setShowSelectUser] = useState(true);
 
     function selectUser(name: string, player1: boolean) {
+      console.log('selectUser called')
       if (player1) {
         setPlayer1Name(name);
       } else {
         setPlayer2Name(name);
       }
       if (player1Name && player2Name) {
-        setHideSelectUser(true);
+        console.log('both names selected')
+        setShowSelectUser(false);
       }
     }
-    
-    // let possibleCheckoutsIntArray: number[] = [];
-    // let possibleScoreFromOneDartIntArray: number[] = [];
-    // const mostPopularCheckouts = [50, 20, 16, 18, 14, 10, 12, 8, 6, 4, 2]
-    // for (let i = 0; i <= 60; i++) {
-    //   if  (!possibleScoreFromOneDartIntArray.includes(i)){
-    //     if (i <= 20 && !possibleScoreFromOneDartIntArray.includes(i)) {
-    //       possibleScoreFromOneDartIntArray.push(i);
-    //       // possibleScoreFromOneDart.push(`S${i} `)
-    //     }
-    //     if (i  % 2 === 0 && i <= 40 && !possibleScoreFromOneDartIntArray.includes(i)) {
-    //       // possibleCheckoutsArray.push(`D${i/2}`);
-    //       possibleCheckoutsIntArray.push(i);
-    //       possibleScoreFromOneDartIntArray.push(i);
-    //       // possibleScoreFromOneDart.push(`D${i/2}`);
-    //     }
-    //     if (i % 3 === 0 && !possibleScoreFromOneDartIntArray.includes(i)) {
-    //       // possibleScoreFromOneDart.push(`T${i/3}`)
-    //       possibleScoreFromOneDartIntArray.push(i);}
-    //   }
-    // }
-
-    // possibleScoreFromOneDartIntArray.push(50);
-    // possibleScoreFromOneDartIntArray.push(25)
-    // console.log('possibleCheckoutsIntArray ' +possibleCheckoutsIntArray)
-    // console.log('possibleScoreFromOneDartIntArray ' +possibleScoreFromOneDartIntArray)
 
     myArray1.reverse();
 
@@ -102,57 +77,21 @@ export default function StandardMode() {
           numberTiles.push(<NumberTile num={value} onTileClick={onTileClick} onX3Click={onX3Click} onX2Click={onX2Click}/>)
       })
 
-    // function calculateCheckouts(currentScore: number, remainingDarts: number = 1): string[] {
-    //   // const possibleCheckouts: string[] = [];
-    //   let possibleCheckouts = [];
-    //   if (remainingDarts === 3) {
-    //     // Check if any combination of two darts from possibleScoreFromOneDartIntArray subtracted from currentScore will leave you with a score that is in mostPopularCheckouts;
-    //     for (let i = 0; i < possibleScoreFromOneDartIntArray.length; i++) {
-    //         for (let j = 0; j < possibleScoreFromOneDartIntArray.length; j++) {
-    //             const score1 = possibleScoreFromOneDartIntArray[i];
-    //             const score2 = possibleScoreFromOneDartIntArray[j];
-    //             const remainingScore = currentScore - score1 - score2;
-    //             if (mostPopularCheckouts.includes((remainingScore === 50)? remainingScore: remainingScore/2)) {
-    //                 possibleCheckouts.push(`PossibleScores ${score1}, ${score2} Checkout${remainingScore}`);
-    //             }
-    //         }
-    //     }
-    // } else if( remainingDarts === 2) {
+  if (showSelectUser){
+    return (
+      <SelectUser selectUser={selectUser}/>
+    )
+  } else {
+    return (
+      <div className='standard-board'>
+          {/* commented out because cricket score is breaking it - will maybe need a seperate cricket scoreboard */}
+          <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name="Caolan" score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins} shotCounter={shotCounter}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name='Dad' playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins} shotCounter={shotCounter}/></div>
+          
+        <div className='main'><div className='game-container'>{numberTiles}</div></div>
+          
+      </div>
+    )
+  }
 
-    //     // check if any possible score from possibleScoreFromOneDartIntArray subtracted from currentScore will leave you with a score that is in mostPopularCheckouts;
-    //     possibleScoreFromOneDartIntArray.forEach((score) => {
-    //       const remainingScore = currentScore - score;
-    //       if (mostPopularCheckouts.includes((remainingScore === 50)? remainingScore: remainingScore/2)) {
-    //         possibleCheckouts.push(`PossibleScore ${score} Checkout${remainingScore}`);
-    //       }
-    //     });
-    //   }
-
-    //   if (remainingDarts === 1 && (currentScore <= 40 && currentScore % 2 === 0 || currentScore === 50)) {
-    //     //checkOutAvailable
-    //     if (currentScore === 50) possibleCheckouts.push(`Bull`);
-    //     else possibleCheckouts.push(`D${currentScore / 2}`);
-    //   }
-
-    //   return possibleCheckouts;
-    // }
-
-    // // Example usage:
-    // const userScore = 60;
-    //   const possibleCheckouts = calculateCheckouts(userScore, 3);
-      
-    //   console.log(`Possible checkouts for ${userScore}:`, possibleCheckouts);
-
-    // myArray1.forEach((value)=> {
-    //         numberTiles.push(<NumberTile num={value}/>)
-    //     })
-  return (
-    <div className='standard-board'>
-        {/* commented out because cricket score is breaking it - will maybe need a seperate cricket scoreboard */}
-        <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name="Caolan" score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins} shotCounter={shotCounter}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name='Dad' playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins} shotCounter={shotCounter}/></div>
-        
-      <div className='main'><div className='game-container'>{numberTiles}</div></div>
-        
-    </div>
-  )
+  
 }
