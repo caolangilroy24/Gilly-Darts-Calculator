@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import ScoreBoard from './ScoreBoard'
 import NumberTile from './NumberTile'
 import Bull from './Bull';
@@ -19,17 +19,16 @@ export default function StandardMode() {
     const [player2Name, setPlayer2Name] = useState('');
     const [showSelectUser, setShowSelectUser] = useState(true);
 
-    function selectUser(name: string, player1: boolean) {
-      console.log('selectUser called')
-      if (player1) {
-        setPlayer1Name(name);
-      } else {
-        setPlayer2Name(name);
-      }
+    useEffect(()=> {
       if (player1Name && player2Name) {
-        console.log('both names selected')
         setShowSelectUser(false);
       }
+    }, [player1Name, player2Name])
+
+    function initiateGame(name1: string, name2: string, player1IsFirst: boolean) {
+      setPlayer1Name(name1);
+      setPlayer2Name(name2);
+      setPlayer1IsNext(player1IsFirst)
     }
 
     myArray1.reverse();
@@ -79,13 +78,13 @@ export default function StandardMode() {
 
   if (showSelectUser){
     return (
-      <SelectUser selectUser={selectUser}/>
+      <SelectUser initiateGame={initiateGame}/>
     )
   } else {
     return (
       <div className='standard-board'>
           {/* commented out because cricket score is breaking it - will maybe need a seperate cricket scoreboard */}
-          <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name="Caolan" score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins} shotCounter={shotCounter}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name='Dad' playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins} shotCounter={shotCounter}/></div>
+          <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name={player1Name} score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins} shotCounter={shotCounter}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name={player2Name} playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins} shotCounter={shotCounter}/></div>
           
         <div className='main'><div className='game-container'>{numberTiles}</div></div>
           
