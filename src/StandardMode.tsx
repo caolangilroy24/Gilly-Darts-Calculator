@@ -69,8 +69,17 @@ export default function StandardMode() {
   }
 
   function onX2Click(value:number) {
-      handleDartThrown(value * 2, true)
+    handleDartThrown(value * 2, true)
+  }
+
+  function onMiss() {
+    let newShotCounter = shotCounter + 1;
+    setShotCounter(newShotCounter);
+    if (newShotCounter >= 3) {
+        setShotCounter(0);
+        setPlayer1IsNext(!player1IsNext);
     }
+  }
 
   myArray1.forEach((value)=> {
           numberTiles.push(<NumberTile num={value} onTileClick={onTileClick} onX3Click={onX3Click} onX2Click={onX2Click}/>)
@@ -87,7 +96,8 @@ export default function StandardMode() {
           <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name={player1Name} score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins} shotCounter={shotCounter}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name={player2Name} playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins} shotCounter={shotCounter}/></div>
           
         <div className='main'><div className='game-container'>{numberTiles}</div></div>
-          
+        <div className='standard-board-first-row'><div className='miss' onClick={onMiss}> Miss </div></div>
+        
       </div>
     )
   }

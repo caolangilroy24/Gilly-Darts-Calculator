@@ -114,9 +114,47 @@
   font-family: 'Callie Chalk Font', sans-serif;
   color: white;
   font-weight: bold;
-  margin-bottom: 5vh; /* Adjust the margin as needed for spacing */
+  margin-bottom: 2vh; /* Adjust the margin as needed for spacing */
   text-decoration: none; /* Initially, no underline */
   line-height: 1.5; 
+}
+
+.chalk-list h2 {
+  font-family: 'Callie Chalk Font', sans-serif;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 5vh; /* Adjust the margin as needed for spacing */
+  margin-top: 5vh; /* Adjust the margin as needed for spacing */
+  text-decoration: none; /* Initially, no underline */
+  /* line-height: 1.5;  */
+}
+
+.chalk-list h3 {
+  font-family: 'Callie Chalk Font', sans-serif;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 5vh; /* Adjust the margin as needed for spacing */
+  text-decoration: none; /* Initially, no underline */
+  /* line-height: 1.5;  */
+}
+
+.chalk-list h3:hover {
+  font-family: 'Callie Chalk Font', sans-serif;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 5vh; /* Adjust the margin as needed for spacing */
+  text-decoration: none; /* Initially, no underline */
+  border-bottom: 3px solid white; /* Simulate underline with border */
+  /* line-height: 1.5;  */
+}
+
+.chalk-list p {
+  font-family: 'Callie Chalk Font', sans-serif;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 5vh; /* Adjust the margin as needed for spacing */
+  text-decoration: none; /* Initially, no underline */
+  /* line-height: 1.5;  */
 }
 
 /* .chalk-list a:hover {

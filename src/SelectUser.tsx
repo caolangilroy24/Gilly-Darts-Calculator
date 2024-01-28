@@ -38,10 +38,10 @@ export default function SelectUser({initiateGame}: SelectUserProps) {
             <div className='chalkboard'>
             <div className='chalk-list'>
             {!usersSelected && <h1>Select User</h1>}
-            <p>Player 1: {player1Name} Player 2: {player2Name}</p>
+            {!usersSelected && <><p>Player 1: {player1Name} Player 2: {player2Name}</p></>}
             {!usersSelected && displayUserArray}
-            {usersSelected && <h1>Throw for bull and select who is going first:</h1>}
-            {usersSelected && <><a onClick={handleFirstTurnSelection(player1Name, player2Name, true)}>Player 1: {player1Name}</a> <a onClick={handleFirstTurnSelection(player1Name, player2Name, false)}>Player 2: {player2Name}</a> </>}
+            {usersSelected && <h2>Throw for bull and select who is going first:</h2>}
+            {usersSelected && <><h3 onClick={handleFirstTurnSelection(player1Name, player2Name, true)}>Player 1: {player1Name}</h3> <h3 onClick={handleFirstTurnSelection(player1Name, player2Name, false)}>Player 2: {player2Name}</h3> </>}
             </div>
             </div>
         </div>
