@@ -25,10 +25,14 @@ export default function StandardMode() {
       }
     }, [player1Name, player2Name])
 
-    function initiateGame(name1: string, name2: string, player1IsFirst: boolean) {
+    function initiateGame(name1: string, name2: string, player1IsFirst: boolean, custumStartingScore?: number) {
       setPlayer1Name(name1);
       setPlayer2Name(name2);
       setPlayer1IsNext(player1IsFirst)
+      if (custumStartingScore) {
+        setPlayer1Score(custumStartingScore);
+        setPlayer2Score(custumStartingScore);
+      }
     }
 
     myArray1.reverse();
