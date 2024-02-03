@@ -21,6 +21,8 @@ export default function StandardMode() {
     let playerWhoWentFirst: string;
     const [gameState, setGameState] = useState<number[][]>([[]]) // odd = first to throw, even = second to throw
     const [turnCounter, setTurnCounter] = useState<number>(0);
+    const [p1LastTurn, setP1LastTurn] = useState<number>()
+    const [p2LastTurn, setP2LastTurn] = useState<number>()
     useEffect(()=> {
       if (player1Name && player2Name) {
         setShowSelectUser(false);
@@ -43,12 +45,21 @@ export default function StandardMode() {
     myArray1.reverse();
 
     function handleDartThrown(value: number, checkoutAllowedDoubleHit: boolean = false) {
+      console.log('Handle Dart Thrown called')
       if (player1Wins) return 0
       let newShotCounter = shotCounter - 1;
       
       console.log(gameState[turnCounter])
-      //setGameState(previousGameState => { TODO: fix this so that it updates the game state every time and once the shots remaining hits 0 a new empty array is added. TOO tired now #Neary1Am
-        //const newGameState = [...previousGameState];
+
+      const newGameState = [...gameState];
+      newGameState[turnCounter -1].push(value);
+      const thisRound = newGameState[turnCounter -1]
+      const sum = thisRound.reduce((acc, num) => acc + num, 0);
+      player1IsNext ? setP1LastTurn(sum) : setP2LastTurn(sum);
+      console.log('SUM this round = ' + sum)
+      setGameState(newGameState);
+      
+
       console.log('@@@@@@@@@@gameState')
       console.log(newShotCounter === 2)
 
