@@ -371,6 +371,13 @@ rotate: 45deg;
 
 }
 
+.undo-container{
+  position: fixed;
+  top: 15vh;
+  right: 4vw;
+  cursor: pointer;
+}
+
 
 .bottom-score-tile-elements {
   /* Rectangle 7 */
@@ -379,7 +386,7 @@ rotate: 45deg;
   align-items: center;
   flex-direction: row;
   font-family: VT323;
-  font-size: 3rem;
+  font-size: 3vw;
   color: #00FF00;
   width: 18vw;
 }

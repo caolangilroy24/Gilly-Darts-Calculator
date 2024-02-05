@@ -3,6 +3,8 @@ import ScoreBoard from './ScoreBoard'
 import NumberTile from './NumberTile'
 import Bull from './Bull';
 import SelectUser from './SelectUser';
+import { LuUndo2 } from "react-icons/lu";
+
 
 export default function StandardMode() {
     const myArray1: number[] = Array.from({ length: 20 }, (_, index) => index + 1);
@@ -88,7 +90,6 @@ export default function StandardMode() {
         setTurnCounter(turnCounterCopy += 1)
         setPlayer1IsNext(!player1IsNext);
       }
-
     }
 
     function onTileClick(value:number) {
@@ -103,6 +104,49 @@ export default function StandardMode() {
   function onX2Click(value:number) {
     handleDartThrown(value * 2, true)
   }
+
+  // function onUndo() {
+  //   console.log('undo clicked')
+  //   if (turnCounter === 0) {
+  //     console.log('true')
+  //     console.log(true)
+  //     return;
+  //   } else {
+  //     let gameStateCopy = [...gameState];
+  //     let turnCounterCopy = turnCounter;
+
+
+  //     if (shotCounter === 3) {
+
+  //       console.log('shotCounter === 3')
+  //       turnCounterCopy = turnCounterCopy - 1;
+  //       setTurnCounter(turnCounterCopy);
+  //       gameStateCopy.pop();
+
+  //     }
+  //   console.log('\n\n\nGameState Copy')
+  //   console.log(gameStateCopy)
+  //   gameStateCopy[turnCounterCopy].pop();
+  //   console.log('gameStateCopy after')
+  //   console.log(gameStateCopy)
+
+
+  //   }
+
+  //   // if (player1IsNext) { BIN THIS 
+  //   //   let newScore = player1Score + p1LastTurn;
+  //   //   setPlayer1Score(newScore);
+  //   //   setScoreThisTurn(0);
+  //   //   setShotCounter(3);
+  //   //   setPlayer1IsNext(false);
+  //   // } else {
+  //   //   let newScore = player2Score + p2LastTurn;
+  //   //   setPlayer2Score(newScore);
+  //   //   setScoreThisTurn(0);
+  //   //   setShotCounter(3);
+  //   //   setPlayer1IsNext(true);
+  //   // }
+  // }
 
   function onMiss() {
 
@@ -125,11 +169,11 @@ export default function StandardMode() {
     return (
       <SelectUser initiateGame={initiateGame}/>
     )
-  } else {
+  } else { //onClick={onUndo}
     return (
       <div className='standard-board'>
           {/* commented out because cricket score is breaking it - will maybe need a seperate cricket scoreboard */}
-          <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name={player1Name} score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins} shotCounter={shotCounter}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name={player2Name} playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins} shotCounter={shotCounter}/></div>
+          <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name={player1Name} score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins} shotCounter={shotCounter}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name={player2Name} playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins} shotCounter={shotCounter}/></div><div className='undo-container'><LuUndo2 style={{fontSize: "5vw",color: "white"}}/></div> 
           
         <div className='main'><div className='game-container'>{numberTiles}</div></div>
         <div className='standard-board-first-row'><div className='miss' onClick={onMiss}> Miss </div></div>
