@@ -140,6 +140,8 @@ export default function StandardMode() {
     let newShotCounter = shotCounter + 1;
     let newTurnCounter = turnCounter;
     let newPlayerOneIsNext = player1IsNext;
+    if (gameState[newTurnCounter] !== undefined && gameState[newTurnCounter].length === 0) gameState.pop();
+
     console.log('shotCounter = ' +shotCounter)
     switch(shotCounter) {
       case 3:
@@ -148,8 +150,10 @@ export default function StandardMode() {
         newShotCounter = 1;
         newTurnCounter = turnCounter - 1;
         newPlayerOneIsNext = !player1IsNext;
+        
         let lastPosition = gameState[newTurnCounter-1].length - 1;
         if (lastPosition !== 2) undoPosition = lastPosition;
+    
         console.log('last Position = ' +lastPosition)
         console.log('gameState[newTurnCounter-1].length')
         console.log(gameState[newTurnCounter-1].length)
