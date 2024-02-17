@@ -47,55 +47,75 @@ export default function StandardMode() {
     myArray1.reverse();
 
     function handleDartThrown(value: number, checkoutAllowedDoubleHit: boolean = false) {
-      // console.log('Handle Dart Thrown called')
+      console.log('Handle Dart Thrown called')
       if (player1Wins) return 0
       let newShotCounter = shotCounter - 1;
       
       // console.log(gameState[turnCounter])
 
       const newGameState = [...gameState];
-      console.log(newGameState)
-      console.log(newGameState[turnCounter -1])
-      console.log('turnCounter ' +turnCounter)
-      newGameState[turnCounter -1].push(value);
+      // console.log(newGameState)
+      // console.log(newGameState[turnCounter -1])
+      // console.log('turnCounter ' +turnCounter)
+      let valueToPush = value;
+      // newGameState[turnCounter -1].push(value);
       const thisRound = newGameState[turnCounter -1]
       const sum = thisRound.reduce((acc, num) => acc + num, 0);
       player1IsNext ? setP1LastTurn(sum) : setP2LastTurn(sum);
       // console.log('SUM this round = ' + sum)
-      setGameState(newGameState);
-      console.log('updating Game State: ' +newGameState)
-      console.log(gameState)
-      console.log(typeof(gameState))
+
+      // setGameState(newGameState);
+      // console.log('updating Game State: ' +newGameState)
+      
+      // console.log(gameState)
+      // console.log(typeof(gameState))
       
 
       // console.log('@@@@@@@@@@gameState')
       // console.log(newShotCounter === 2)
 
-      // console.log(gameState)
       setShotCounter(newShotCounter);
       const scoreThisTurnCopy = scoreThisTurn + value
       setScoreThisTurn(scoreThisTurnCopy);
       let nextScore = player1IsNext? player1Score - value : player2Score - value;
       player1IsNext? setPlayer1Score(nextScore) : setPlayer2Score(nextScore)
       if (nextScore === 0 && checkoutAllowedDoubleHit) player1IsNext? setPlayer1Wins(true) : setPlayer2Wins(true);
-      else if (nextScore === 0 && !checkoutAllowedDoubleHit || nextScore < 0) {
+      else if (nextScore === 0 && !checkoutAllowedDoubleHit || nextScore < 0) { //ADD NEW ARRAY
+        let valueToPush = -1; // this is a bust
+
         player1IsNext? setPlayer1Score(scoreBeforeTurn) : setPlayer2Score(scoreBeforeTurn);
         setScoreBeforeTurn(!player1IsNext? player1Score : player2Score)
         setScoreThisTurn(0);
         setShotCounter(3);
         let turnCounterCopy = turnCounter;
-        setTurnCounter(turnCounterCopy += 1)
         setPlayer1IsNext(!player1IsNext);
+        if (gameState[turnCounter] == undefined) {
+          // console.log(gameState[turnCounter])
+          // console.log('Empty')
+          // console.log('turnCounter ' +turnCounter)
+          // console.log(gameState)
+          console.log('Adding a empty array in handle dart thrown bust')
+          setGameState(previousGameState => [...previousGameState, []])
+
+        }
+
+        setTurnCounter(turnCounterCopy += 1)
+
+
       }
+      newGameState[turnCounter -1].push(valueToPush);
+      setGameState(newGameState);
       if (newShotCounter <= 0){
         setScoreBeforeTurn(!player1IsNext? player1Score : player2Score)
-        setGameState(previousGameState => [...previousGameState, []])
+        if (gameState[turnCounter] == undefined) setGameState(previousGameState => [...previousGameState, []])
         setScoreThisTurn(0);
         setShotCounter(3);
         let turnCounterCopy = turnCounter;
         setTurnCounter(turnCounterCopy += 1)
         setPlayer1IsNext(!player1IsNext);
       }
+      console.log(gameState)
+
     }
 
     function onTileClick(value:number) {
@@ -113,20 +133,28 @@ export default function StandardMode() {
 
   function onUndo() {
     if (player1Score === 501 && player2Score === 501) return;
-    console.log('\n\n\nundo clicked')
+    // console.log('\n\n\nundo clicked')
     let undoPosition = 0;
     let newShotCounter = shotCounter + 1;
     let newTurnCounter = turnCounter;
     let newPlayerOneIsNext = player1IsNext;
+    console.log('shotCounter = ' +shotCounter)
     switch(shotCounter) {
       case 3:
-        undoPosition = 2;
+  
+        undoPosition = 2 //gameState[newTurnCounter-1].length;
         newShotCounter = 1;
         newTurnCounter = turnCounter - 1;
         newPlayerOneIsNext = !player1IsNext;
+        let lastPosition = gameState[newTurnCounter-1].length - 1;
+        if (lastPosition !== 2) undoPosition = lastPosition;
+        console.log('last Position = ' +lastPosition)
+        console.log('gameState[newTurnCounter-1].length')
+        console.log(gameState[newTurnCounter-1].length)
+        console.log(gameState[newTurnCounter-1])
         setPlayer1IsNext(newPlayerOneIsNext);
         setTurnCounter(newTurnCounter);
-        gameState.pop();
+        // gameState.pop();
         // Will need to change whose turn it is
         // Will need to change the score
         // Will need to change the shot counter
@@ -136,6 +164,7 @@ export default function StandardMode() {
         break;
       case 2:
         undoPosition = 0;
+        if (gameState[newTurnCounter] && gameState[newTurnCounter].length === 1) gameState.pop();
         break;
       case 1:
         undoPosition = 1;
@@ -143,23 +172,31 @@ export default function StandardMode() {
     }
     console.log('Turn counter: ' +turnCounter)
     console.log('New Turn counter: ' +newTurnCounter)
-    console.log(gameState)
-    console.log(typeof(gameState))
-    console.log(gameState[newTurnCounter-1])
-    console.log(undoPosition)
-    console.log(gameState[newTurnCounter-1][undoPosition])
+    // console.log(gameState)
+    // console.log(typeof(gameState))
+    // console.log(gameState[newTurnCounter-1])
+    // console.log(undoPosition)
+    // console.log(gameState[newTurnCounter-1][undoPosition])
     const lastThrow = gameState[newTurnCounter-1][undoPosition];
     const newGameState = gameState[newTurnCounter-1].pop();
-    console.log('newGameState')
+    // console.log('newGameState')
+    console.log(gameState)
     console.log(newGameState);
     // const newShotCounter = shotCounter + 1;
-    console.log('newShotCounter')
-    console.log(newShotCounter)
-    console.log('Shot counter: ' +shotCounter)
+    // console.log('newShotCounter')
+    // console.log(newShotCounter)
+    // console.log('Shot counter: ' +shotCounter)
 
-    console.log('player 1 is next: ' +newPlayerOneIsNext)
-    const newScore = (newPlayerOneIsNext)? player1Score + lastThrow : player2Score + lastThrow;
-    newPlayerOneIsNext? setPlayer1Score(newScore) : setPlayer2Score(newScore);
+    // console.log('player 1 is next: ' +newPlayerOneIsNext)
+    const testPlayerScore = (newPlayerOneIsNext)? player1Score : player2Score;
+    console.log(`\n\n\n\n-----------debug-----------\n newTurnCounter-1 : ${newTurnCounter-1} undoPosition : ${undoPosition}`)
+    console.log(`Test Player SCore : ${testPlayerScore} - lastThrow : ${lastThrow}`)
+
+    if (lastThrow !== -1) {
+      const newScore = (newPlayerOneIsNext)? player1Score + lastThrow : player2Score + lastThrow;
+      newPlayerOneIsNext? setPlayer1Score(newScore) : setPlayer2Score(newScore);
+    }
+    
     player1IsNext? console.log(player1Score) : console.log(player2Score)
     setShotCounter(newShotCounter);
 
@@ -211,7 +248,7 @@ export default function StandardMode() {
   function onMiss() {
 
     let newShotCounter = shotCounter + 1;
-    console.log(newShotCounter)
+    // console.log(newShotCounter)
     setShotCounter(newShotCounter);
     if (newShotCounter >= 3) {
         setShotCounter(0);

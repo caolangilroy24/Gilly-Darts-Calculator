@@ -14,8 +14,6 @@ export default function Bull({bull, isCricketMode=false, onTileClick = () => {},
             if (bull === 50) onX2Click(50)
             else if (bull === 25) onTileClick(50)
         } else {
-            console.log('bull clicked')
-            console.log(bull)
             onTileClick(bull)
         }
         

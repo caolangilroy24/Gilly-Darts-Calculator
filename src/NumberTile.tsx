@@ -36,7 +36,7 @@ export default function NumberTile({num, isHidden = false, onTileClick = () => {
     const multipleStyle = { backgroundColor: multipleColour, fontSize: "1.5rem" }
 
   return (
-    <div key={num} className='number-tile'>
+    <div key={num} id={num.toString()} className='number-tile'>
         <div className='number-tile-container'>
             <div className='top-number-tile-element' style={style} onClick={handleTileClick}>
                 {num}
