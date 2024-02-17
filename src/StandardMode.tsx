@@ -60,7 +60,9 @@ export default function StandardMode() {
       let valueToPush = value;
       // newGameState[turnCounter -1].push(value);
       const thisRound = newGameState[turnCounter -1]
-      const sum = thisRound.reduce((acc, num) => acc + num, 0);
+      const sum = thisRound.reduce((acc, num) => {
+        return num !== -1? acc + num: acc}, 0
+      );
       player1IsNext ? setP1LastTurn(sum) : setP2LastTurn(sum);
       // console.log('SUM this round = ' + sum)
 
@@ -80,8 +82,8 @@ export default function StandardMode() {
       let nextScore = player1IsNext? player1Score - value : player2Score - value;
       player1IsNext? setPlayer1Score(nextScore) : setPlayer2Score(nextScore)
       if (nextScore === 0 && checkoutAllowedDoubleHit) player1IsNext? setPlayer1Wins(true) : setPlayer2Wins(true);
-      else if (nextScore === 0 && !checkoutAllowedDoubleHit || nextScore < 0) { //ADD NEW ARRAY
-        let valueToPush = -1; // this is a bust
+      else if (nextScore === 0 && !checkoutAllowedDoubleHit || nextScore <= 1) { //ADD NEW ARRAY
+        valueToPush = -1; // this is a bust
 
         player1IsNext? setPlayer1Score(scoreBeforeTurn) : setPlayer2Score(scoreBeforeTurn);
         setScoreBeforeTurn(!player1IsNext? player1Score : player2Score)
@@ -193,9 +195,18 @@ export default function StandardMode() {
     console.log(`Test Player SCore : ${testPlayerScore} - lastThrow : ${lastThrow}`)
 
     if (lastThrow !== -1) {
+      console.log('MINUS 1 @@@@@@@@@@')
       const newScore = (newPlayerOneIsNext)? player1Score + lastThrow : player2Score + lastThrow;
       newPlayerOneIsNext? setPlayer1Score(newScore) : setPlayer2Score(newScore);
+    } else {
+      console.log('Undoing a bust')
+      const scoredBeforeBust = gameState[newTurnCounter-1].reduce((acc, num) => {
+        return num !== -1? acc + num: acc}, 0
+      );
+      const newScore = (newPlayerOneIsNext)? player1Score - scoredBeforeBust : player2Score - scoredBeforeBust;
+      newPlayerOneIsNext? setPlayer1Score(newScore) : setPlayer2Score(newScore);
     }
+
     
     player1IsNext? console.log(player1Score) : console.log(player2Score)
     setShotCounter(newShotCounter);
