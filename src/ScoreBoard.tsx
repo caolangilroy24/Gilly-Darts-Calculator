@@ -110,7 +110,7 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
           const secondLastDartString = convertScoreToDartsDisplay(score);
           if (isPreferredCheckout(remainingScore)) {
             checkoutString = convertScoreToDartsDisplay(remainingScore, true);
-            possibleCheckouts.push(` ${secondLastDartString} ${checkoutString}`);
+            possibleCheckouts.push(` ${secondLastDartString}, ${checkoutString}`);
           }
         });
         return possibleCheckouts;
@@ -135,7 +135,7 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
                     const remainingScore = currentScore - score1 - score2;
                     if (isPreferredCheckout(remainingScore)) {
                       const checkoutString = convertScoreToDartsDisplay(remainingScore, true);
-                      possibleCheckouts.push(`${thirdLastDartString}, ${secondLastDartString} ${checkoutString}`);
+                      possibleCheckouts.push(`${thirdLastDartString}, ${secondLastDartString}, ${checkoutString}`);
                     }
                 }
             }

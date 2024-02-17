@@ -47,25 +47,31 @@ export default function StandardMode() {
     myArray1.reverse();
 
     function handleDartThrown(value: number, checkoutAllowedDoubleHit: boolean = false) {
-      console.log('Handle Dart Thrown called')
+      // console.log('Handle Dart Thrown called')
       if (player1Wins) return 0
       let newShotCounter = shotCounter - 1;
       
-      console.log(gameState[turnCounter])
+      // console.log(gameState[turnCounter])
 
       const newGameState = [...gameState];
+      console.log(newGameState)
+      console.log(newGameState[turnCounter -1])
+      console.log('turnCounter ' +turnCounter)
       newGameState[turnCounter -1].push(value);
       const thisRound = newGameState[turnCounter -1]
       const sum = thisRound.reduce((acc, num) => acc + num, 0);
       player1IsNext ? setP1LastTurn(sum) : setP2LastTurn(sum);
-      console.log('SUM this round = ' + sum)
+      // console.log('SUM this round = ' + sum)
       setGameState(newGameState);
+      console.log('updating Game State: ' +newGameState)
+      console.log(gameState)
+      console.log(typeof(gameState))
       
 
-      console.log('@@@@@@@@@@gameState')
-      console.log(newShotCounter === 2)
+      // console.log('@@@@@@@@@@gameState')
+      // console.log(newShotCounter === 2)
 
-      console.log(gameState)
+      // console.log(gameState)
       setShotCounter(newShotCounter);
       const scoreThisTurnCopy = scoreThisTurn + value
       setScoreThisTurn(scoreThisTurnCopy);
@@ -105,33 +111,87 @@ export default function StandardMode() {
     handleDartThrown(value * 2, true)
   }
 
-  // function onUndo() {
-  //   console.log('undo clicked')
-  //   if (turnCounter === 0) {
-  //     console.log('true')
-  //     console.log(true)
-  //     return;
-  //   } else {
-  //     let gameStateCopy = [...gameState];
-  //     let turnCounterCopy = turnCounter;
+  function onUndo() {
+    if (player1Score === 501 && player2Score === 501) return;
+    console.log('\n\n\nundo clicked')
+    let undoPosition = 0;
+    let newShotCounter = shotCounter + 1;
+    let newTurnCounter = turnCounter;
+    let newPlayerOneIsNext = player1IsNext;
+    switch(shotCounter) {
+      case 3:
+        undoPosition = 2;
+        newShotCounter = 1;
+        newTurnCounter = turnCounter - 1;
+        newPlayerOneIsNext = !player1IsNext;
+        setPlayer1IsNext(newPlayerOneIsNext);
+        setTurnCounter(newTurnCounter);
+        gameState.pop();
+        // Will need to change whose turn it is
+        // Will need to change the score
+        // Will need to change the shot counter
+        // Will need to change the turn counter
+
+        
+        break;
+      case 2:
+        undoPosition = 0;
+        break;
+      case 1:
+        undoPosition = 1;
+        break;
+    }
+    console.log('Turn counter: ' +turnCounter)
+    console.log('New Turn counter: ' +newTurnCounter)
+    console.log(gameState)
+    console.log(typeof(gameState))
+    console.log(gameState[newTurnCounter-1])
+    console.log(undoPosition)
+    console.log(gameState[newTurnCounter-1][undoPosition])
+    const lastThrow = gameState[newTurnCounter-1][undoPosition];
+    const newGameState = gameState[newTurnCounter-1].pop();
+    console.log('newGameState')
+    console.log(newGameState);
+    // const newShotCounter = shotCounter + 1;
+    console.log('newShotCounter')
+    console.log(newShotCounter)
+    console.log('Shot counter: ' +shotCounter)
+
+    console.log('player 1 is next: ' +newPlayerOneIsNext)
+    const newScore = (newPlayerOneIsNext)? player1Score + lastThrow : player2Score + lastThrow;
+    newPlayerOneIsNext? setPlayer1Score(newScore) : setPlayer2Score(newScore);
+    player1IsNext? console.log(player1Score) : console.log(player2Score)
+    setShotCounter(newShotCounter);
+
+    // if (turnCounter === 0) {
+    //   console.log('true')
+    //   console.log(true)
+    //   return;
+    // } else {
+    //   let gameStateCopy = [...gameState];
+    //   let turnCounterCopy = turnCounter;
 
 
-  //     if (shotCounter === 3) {
+    //   if (shotCounter === 3) {
 
-  //       console.log('shotCounter === 3')
-  //       turnCounterCopy = turnCounterCopy - 1;
-  //       setTurnCounter(turnCounterCopy);
-  //       gameStateCopy.pop();
+    //     console.log('shotCounter === 3')
+    //     console.log('shot == 3 turnCounterCopy = ' + turnCounterCopy)
 
-  //     }
-  //   console.log('\n\n\nGameState Copy')
-  //   console.log(gameStateCopy)
-  //   gameStateCopy[turnCounterCopy].pop();
-  //   console.log('gameStateCopy after')
-  //   console.log(gameStateCopy)
+    //     turnCounterCopy = turnCounterCopy - 1;
+    //     setShotCounter(1)
+    //     console.log('shot == 3 turnCounterCopy = ' + turnCounterCopy)
+    //     setTurnCounter(turnCounterCopy);
+    //     gameStateCopy.pop();
+
+    //   }
+    // console.log('\n\n\nGameState Copy')
+    // console.log(gameStateCopy)
+    // // gameStateCopy[turnCounterCopy].pop();
+    // console.log('gameStateCopy after')
+    // console.log(gameStateCopy)
 
 
-  //   }
+    // }
 
   //   // if (player1IsNext) { BIN THIS 
   //   //   let newScore = player1Score + p1LastTurn;
@@ -146,7 +206,7 @@ export default function StandardMode() {
   //   //   setShotCounter(3);
   //   //   setPlayer1IsNext(true);
   //   // }
-  // }
+  }
 
   function onMiss() {
 
@@ -173,7 +233,7 @@ export default function StandardMode() {
     return (
       <div className='standard-board'>
           {/* commented out because cricket score is breaking it - will maybe need a seperate cricket scoreboard */}
-          <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name={player1Name} score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins} shotCounter={shotCounter}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name={player2Name} playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins} shotCounter={shotCounter}/></div><div className='undo-container'><LuUndo2 style={{fontSize: "5vw",color: "white"}}/></div> 
+          <div className='standard-board-first-row'><ScoreBoard playerTurn={player1IsNext} name={player1Name} score={player1Score} scoreBefore={scoreBeforeTurn} winner={player1Wins} shotCounter={shotCounter}/><Bull bull={50} onTileClick={onTileClick}/><Bull bull={25} onTileClick={onTileClick}/>  <ScoreBoard name={player2Name} playerTurn={!player1IsNext} score={player2Score} scoreBefore={scoreBeforeTurn} winner={player2Wins} shotCounter={shotCounter}/></div><div className='undo-container'><LuUndo2 onClick={onUndo}style={{fontSize: "5vw",color: "white"}}/></div> 
           
         <div className='main'><div className='game-container'>{numberTiles}</div></div>
         <div className='standard-board-first-row'><div className='miss' onClick={onMiss}> Miss </div></div>
