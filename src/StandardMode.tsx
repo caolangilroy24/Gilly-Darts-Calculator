@@ -84,13 +84,37 @@ export default function StandardMode() {
     console.log(positionArrayCopy)
 
     
-    setShotCounter(newShotCounter);
-    setScoreThisTurn(scoreThisTurnCopy);
+    setShotCounter(newShotCounter); // this does not need to be called here, if the last dart is thrown, it will be set back to 3 in the last if statement
+    setScoreThisTurn(scoreThisTurnCopy); // this also will be changed if either if conditions are true. can move to the end of the function
+
+    // I need to find out all the different  ways to end a turn
+    // 1. Player busts
+    // 2. Player checks out (wins the game)
+    // 3. Player used all 3 darts
+    // 
+    // Ways a turn can go
+    // 1. Player busts
+    // 2. Player checks out (wins the game)
+    // 3. Player Scores
+    // 4. Player Misses
+
+    // Thats 3 different ways to finish this. bust, checkout, out of darts.
+    // out of darts, should be handled at end of function, once all logic has been covered.
+    // Steps that make sense to me at the moment
+    // 1. Check if player wins (maybe return here if they do?)
+    // 2. Check if player busts (maybe return here if they do?)
+    // 3. If not checked out or bust, update score, 
+    // 4. Check  newShotCounter if 0, if so, reset shot counter, increment turn counter, switch player, and reset scoreThisTurn, 
+    // if not updateShotCounter, and scoreThisTurn, and return to top of function.
+    // Each of these could nearlu be a seperate function for clear consise flow.
+    // TODO figure out when a new [] is needed, and how to always have the correct position pointer.
+
+
 
     let nextScore = player1IsNext ? player1Score - value : player2Score - value;
     player1IsNext ? setPlayer1Score(nextScore) : setPlayer2Score(nextScore) //Can I turn this into a function?
 
-    if (nextScore === 0 && checkoutAllowedDoubleHit) player1IsNext ? setPlayer1Wins(true) : setPlayer2Wins(true);
+    if (nextScore === 0 && checkoutAllowedDoubleHit) player1IsNext ? setPlayer1Wins(true) : setPlayer2Wins(true); // I think I can return here
     else if (nextScore === 0 && !checkoutAllowedDoubleHit || nextScore <= 1) { //ADD NEW ARRAY
       valueToPush = -1; // this is a bust
 
