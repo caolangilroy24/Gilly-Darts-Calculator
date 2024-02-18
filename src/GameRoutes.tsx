@@ -12,10 +12,10 @@ export default function GameRoutes() {
   return (
     <Router>
         <Routes>
-               <Route path="/standard" element={<StandardMode/>}></Route>
-               <Route path="/around" element={<AroundTheBoardMode/>}></Route>
-               <Route path="/cricket" element={<CricketMode/>}></Route>
-               <Route path="/" element={<ChalkBoard/>}></Route>
+               <Route id={'standard'} path="/standard" element={<StandardMode/>}></Route>
+               <Route id={'around'} path="/around" element={<AroundTheBoardMode/>}></Route>
+               <Route id={'cricket'} path="/cricket" element={<CricketMode/>}></Route>
+               <Route id={'home'} path="/" element={<ChalkBoard/>}></Route>
         </Routes>
     </Router>
   )
