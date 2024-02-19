@@ -164,6 +164,31 @@ export default function StandardMode() {
   }
 
   function onUndo() {
+    // Need to check if the game is over, if so, return
+    // If Not, need to check if the gameState is empty, if so, return
+
+    // First Check if current player has 3 darts remaining, 
+    //    if so your Undo Is Undoing the last player's turn.
+    //    So Change Turn Counter - 1
+    // If neither, need to check if the last turn was a bust
+    // NOTE: Easiest way to check if the last turn was a bust is to check if the last value in the array is -1 by popping it off and checking it.
+    // If it was, 
+    // 1. I have to check what position the Bust was stored In.
+        // Can Check how long the Array Is after popping the bust off to get position e.g. [10, 10, -1] => [10, 10] => arr.length = 2 so next dart position will be at 2 here.
+        // [10, -1] => [10] => length = 1, position 1 is where the next dart will go
+        // [-1] => [] => length = 0, position 0 is where the next dart will go
+    //2. The Score has been reset after a Bust, so Ignoring the bust score of -1, I need to remove any other scores the user got this turn
+        // For example score = 40 turn = [20, 10, -1], Score is reset to 40, One Undo should bring you to 10 (-20-10)
+        // If you undo 2 more times from here, you are back at the 40 that you previously were at. 
+        // If length is not 0, use reduce to sum each number, and remove from the score, to get the score before Bust.
+        // if length is 0, leave the score as it is.
+    // 3. If it is not a bust, can add the popped value back to current score, and remove the last value from the array.
+    // Finally, pop off from the position array regardless of the rest.
+    // Unsure from here: 
+    // set shot counter to the shot counter popped off the position array? this should put you back to where you were before?
+    
+
+
     if (player1Score === 501 && player2Score === 501) return;
     console.log('\n\n\nundo clicked')
     let undoPosition = 0;
