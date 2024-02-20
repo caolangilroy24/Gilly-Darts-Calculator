@@ -15,8 +15,11 @@ export default function DartIconsDisplayArray({testScore}: DartIconsDisplayInter
     if (testScore===0) DartArray = [<GiDart style={dartStyleOff}/>,<GiDart style={dartStyleOff}/>,<GiDart style={dartStyleOff}/>]
 
   return (
-    <div className='bottom-cricket-tile-elements'>
+  //  div className='bottom-cricket-tile-elements'>
+  // </div>
+      <>
         {DartArray}
-    </div>
+        </>
+   
   )
 }
