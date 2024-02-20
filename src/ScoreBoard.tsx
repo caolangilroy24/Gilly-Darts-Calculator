@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { GiDart } from 'react-icons/gi'
+import DartIconsDisplayArray from './DartIconsDisplayArray';
 
 
 interface ScoreBoardProps {
@@ -16,6 +17,7 @@ interface ScoreBoardProps {
 
 export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefore, isCricketMode=false, isAroundTheBoardMode=false, scoreArray, playerTurn, winner}: ScoreBoardProps) {
     const [checkoutSuggestion, setCheckoutSuggestion] = useState<string>('')
+
     let possibleCheckoutsIntArray: number[] = [];
     let possibleScoreFromOneDartIntArray: number[] = [];
     let possibleScoreWithoutMultiplesOrBull: number[] = [];
@@ -35,6 +37,8 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
           possibleScoreFromOneDartIntArray.push(i);}
       }
     }
+    let remainingDarts = 3;
+    
     
 
     useEffect(()=> {
@@ -181,11 +185,9 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
     } else { 
         scoreTile = <div className='score-tile'>
         <div className='top-score-tile-element'>
-            {playerTurn && !winner && <div className='dart-icon-contain'><GiDart style={{fontSize: ".7em"}}/></div>}
+            {playerTurn && !winner && <div className='dart-icon-contain'><DartIconsDisplayArray testScore={shotCounter}/></div>}
                 {winner && <p>Winner:</p>}
-
                 {name} - {score}
-            {playerTurn && !winner && <div className='dart-icon-contain'><GiDart style={{fontSize: ".7em"}}/></div>}
                 
                 </div>
                 <div className='score-checkout'>Checkout: <button onClick={handleExtraDartRequest}>use extra dart</button></div>

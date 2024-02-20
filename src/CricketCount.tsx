@@ -29,7 +29,7 @@ export default function CricketCount({num, testScore=3}: CricketCountProps) {
         <div className='cricket-score-count'>
             {output}
         </div>
-        <DartIconsDisplayArray remaining={remaining} testScore={testScore}/>
+        <DartIconsDisplayArray testScore={testScore}/>
        
     </div>
     

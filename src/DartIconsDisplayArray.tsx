@@ -2,11 +2,10 @@ import React from 'react'
 import { GiDart } from 'react-icons/gi'
 
 interface DartIconsDisplayInterface{
-    remaining: boolean[];
     testScore: number;
 }
 
-export default function DartIconsDisplayArray({remaining, testScore}: DartIconsDisplayInterface) {
+export default function DartIconsDisplayArray({testScore}: DartIconsDisplayInterface) {
     let dartStyle = {fontSize: ".6em" }
     let dartStyleOff = { color:"black", fontSize: ".6em" }
     let DartArray: JSX.Element[] = [];
