@@ -163,9 +163,8 @@ export default function StandardMode() {
 
   function switchCurrentPlayer() {
     setScoreBeforeTurn(!player1IsNext ? player1Score : player2Score) //switch whose score is held here
-    
-    setScoreThisTurn(0); // these two are paired together quite a bit. can make them a function. 
-    setShotCounter(3);
+    setScoreThisTurnAndShotCounter(0, 3);
+
     let newTurnCounter = turnCounter + 1; // unsure if this is required or can i do it directly
     setTurnCounter(newTurnCounter)
     setPlayer1IsNext(!player1IsNext);
@@ -175,44 +174,37 @@ export default function StandardMode() {
 
   function handleDartThrownRevamp(value: number, checkoutAllowedDoubleHit: boolean = false) {
     console.log('Handle Dart Thrown  Revamp called Turn Counter: ' + turnCounter)
-    if (player1Wins) return 0
+    if (player1Wins) return 0 // Game is over, return
 
+    // Update shot counter and scoreThisTurn. Make a copy of the gameState to avoid mutating state.
     let newShotCounter = shotCounter - 1;
     const newGameState = [...gameState];
-    let valueToPush = value;
     const scoreThisTurnCopy = scoreThisTurn + value
 
     // handling position Array Incrementation - maybe this can be moved to a function
     const position = getPositionInShotArray(shotCounter)
     incrementPositionArray(position);
     
-    //setShotCounter(newShotCounter); // this does not need to be called here, if the last dart is thrown, it will be set back to 3 in the last if statement
-    //setScoreThisTurn(scoreThisTurnCopy); // this also will be changed if either if conditions are true. can move to the end of the function
-    setScoreThisTurnAndShotCounter(scoreThisTurnCopy, newShotCounter );
-
+    // Update the Score Before check for Win or Bust.
     let nextScore = player1IsNext ? player1Score - value : player2Score - value;
     player1IsNext ? setPlayer1Score(nextScore) : setPlayer2Score(nextScore) //Can I turn this into a function?
     
+    setScoreThisTurnAndShotCounter(scoreThisTurnCopy, newShotCounter);
 
-
-    
-
-    if (nextScore === 0 && checkoutAllowedDoubleHit) player1IsNext ? setPlayer1Wins(true) : setPlayer2Wins(true); // I think I can return here
+    if (nextScore === 0 && checkoutAllowedDoubleHit) player1IsNext ? setPlayer1Wins(true) : setPlayer2Wins(true); 
     else if (nextScore === 0 && !checkoutAllowedDoubleHit || nextScore <= 1) { // BUST - reset score to before turn, and switch player
-      valueToPush = -1; // this is a bust
+      value = -1;
       player1IsNext ? setPlayer1Score(scoreBeforeTurn) : setPlayer2Score(scoreBeforeTurn);
       switchCurrentPlayer();
     }
 
-    newGameState[turnCounter - 1].push(valueToPush);
+    newGameState[turnCounter - 1].push(value);
     setGameState(newGameState);
 
-    if (newShotCounter <= 0) { // last Dart Thrown. //Switch player and add empty array to gameState.
+    if (newShotCounter <= 0) { // last Dart Thrown so switch player.
       switchCurrentPlayer();
     }
-
     console.log(gameState)
-
   }
 
 
