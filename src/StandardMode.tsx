@@ -26,11 +26,23 @@ export default function StandardMode() {
   const [p1LastTurn, setP1LastTurn] = useState<number>()
   const [p2LastTurn, setP2LastTurn] = useState<number>()
   const [positionArray, setPositionArray] = useState<Array<{ turn: number, shot: number }>>([])
+  const [handleBustBoolean, setHandleBustBoolean] = useState<boolean>(false)
+  
   useEffect(() => {
     if (player1Name && player2Name) {
       setShowSelectUser(false);
     }
   }, [player1Name, player2Name])
+
+  useEffect(() => {
+    if (shotCounter === 1 || handleBustBoolean === true) {
+      let newGameState = [...gameState];
+      newGameState.push([]);
+      setGameState(newGameState);
+      setHandleBustBoolean(false);
+    }
+
+  }, [shotCounter, handleBustBoolean])
 
   function initiateGame(name1: string, name2: string, player1IsFirst: boolean, custumStartingScore?: number) {
     setPlayer1Name(name1);
@@ -65,91 +77,6 @@ export default function StandardMode() {
     return position;
   }
 
-  function handleDartThrown(value: number, checkoutAllowedDoubleHit: boolean = false) {
-    console.log('Handle Dart Thrown called Turn Counter: ' + turnCounter)
-    if (player1Wins) return 0
-    let newShotCounter = shotCounter - 1;
-    const newGameState = [...gameState];
-    let valueToPush = value;
-    const scoreThisTurnCopy = scoreThisTurn + value
-
-    const position = getPositionInShotArray(shotCounter)
-    let positionArrayCopy = [...positionArray];
-    positionArrayCopy.push({ turn: turnCounter - 1, shot: position });
-    setPositionArray(positionArrayCopy);
-
-
-    console.log(`Dart Pointer : gameState[${turnCounter - 1}][${position}]`)
-    console.log('positionArrayCopy')
-    console.log(positionArrayCopy)
-
-    
-    setShotCounter(newShotCounter); // this does not need to be called here, if the last dart is thrown, it will be set back to 3 in the last if statement
-    setScoreThisTurn(scoreThisTurnCopy); // this also will be changed if either if conditions are true. can move to the end of the function
-
-    // I need to find out all the different  ways to end a turn
-    // 1. Player busts
-    // 2. Player checks out (wins the game)
-    // 3. Player used all 3 darts
-    // 
-    // Ways a turn can go
-    // 1. Player busts
-    // 2. Player checks out (wins the game)
-    // 3. Player Scores
-    // 4. Player Misses
-
-    // Thats 3 different ways to finish this. bust, checkout, out of darts.
-    // out of darts, should be handled at end of function, once all logic has been covered.
-    // Steps that make sense to me at the moment
-    // 1. Check if player wins (maybe return here if they do?)
-    // 2. Check if player busts (maybe return here if they do?)
-    // 3. If not checked out or bust, update score, 
-    // 4. Check  newShotCounter if 0, if so, reset shot counter, increment turn counter, switch player, and reset scoreThisTurn, 
-    // if not updateShotCounter, and scoreThisTurn, and return to top of function.
-    // Each of these could nearlu be a seperate function for clear consise flow.
-    // TODO figure out when a new [] is needed, and how to always have the correct position pointer.
-
-
-
-    let nextScore = player1IsNext ? player1Score - value : player2Score - value;
-    player1IsNext ? setPlayer1Score(nextScore) : setPlayer2Score(nextScore) //Can I turn this into a function?
-
-    if (nextScore === 0 && checkoutAllowedDoubleHit) player1IsNext ? setPlayer1Wins(true) : setPlayer2Wins(true); // I think I can return here
-    else if (nextScore === 0 && !checkoutAllowedDoubleHit || nextScore <= 1) { //ADD NEW ARRAY
-      valueToPush = -1; // this is a bust
-
-      player1IsNext ? setPlayer1Score(scoreBeforeTurn) : setPlayer2Score(scoreBeforeTurn);
-      setScoreBeforeTurn(!player1IsNext ? player1Score : player2Score)
-
-      setScoreThisTurn(0);
-      setShotCounter(3);
-
-      if (gameState[turnCounter] == undefined) {
-        console.log('Adding a empty array in handle dart thrown bust')
-        setGameState(previousGameState => [...previousGameState, []])
-      }
-      let newTurnCounter = turnCounter + 1;
-      setTurnCounter(newTurnCounter)
-      setPlayer1IsNext(!player1IsNext);
-    }
-
-    newGameState[turnCounter - 1].push(valueToPush);
-    setGameState(newGameState);
-
-    if (newShotCounter <= 0) { // last Dart Thrown.
-      setScoreBeforeTurn(!player1IsNext ? player1Score : player2Score) //switch whose score is held here
-
-      if (gameState[turnCounter] == undefined) setGameState(previousGameState => [...previousGameState, []]) // if there isnt a [] at end of array, add one
-      setScoreThisTurn(0); // these two are paired together quite a bit. can make them a function. 
-      setShotCounter(3);
-      let newTurnCounter = turnCounter + 1; // unsure if this is required or can i do it directly
-      setTurnCounter(newTurnCounter) // increment turn counter
-      setPlayer1IsNext(!player1IsNext); //switch players
-    }
-    console.log(gameState)
-
-  }
-
   function incrementPositionArray(position: number) {
     let positionArrayCopy = [...positionArray];
     positionArrayCopy.push({ turn: turnCounter - 1, shot: position });
@@ -168,12 +95,10 @@ export default function StandardMode() {
     let newTurnCounter = turnCounter + 1; // unsure if this is required or can i do it directly
     setTurnCounter(newTurnCounter)
     setPlayer1IsNext(!player1IsNext);
-    if (gameState[turnCounter] == undefined) setGameState(previousGameState => [...previousGameState, []]); // if there isnt a [] at end of array, add one
   }
 
 
-  function handleDartThrownRevamp(value: number, checkoutAllowedDoubleHit: boolean = false) {
-    console.log('Handle Dart Thrown  Revamp called Turn Counter: ' + turnCounter)
+  function handleDartThrown(value: number, checkoutAllowedDoubleHit: boolean = false) {
     if (player1Wins) return 0 // Game is over, return
 
     // Update shot counter and scoreThisTurn. Make a copy of the gameState to avoid mutating state.
@@ -194,21 +119,21 @@ export default function StandardMode() {
     if (nextScore === 0 && checkoutAllowedDoubleHit) player1IsNext ? setPlayer1Wins(true) : setPlayer2Wins(true); 
     else if (nextScore === 0 && !checkoutAllowedDoubleHit || nextScore <= 1) { // BUST - reset score to before turn, and switch player
       value = -1;
+      setHandleBustBoolean(true);
       player1IsNext ? setPlayer1Score(scoreBeforeTurn) : setPlayer2Score(scoreBeforeTurn);
       switchCurrentPlayer();
     }
-
+    console.log(newGameState)
     newGameState[turnCounter - 1].push(value);
     setGameState(newGameState);
 
     if (newShotCounter <= 0) { // last Dart Thrown so switch player.
       switchCurrentPlayer();
     }
-    console.log(gameState)
   }
 
 
-  // I need to find out all the different  ways to end a turn this is for handleDartThrownRevamp
+  // I need to find out all the different  ways to end a turn this is for handleDartThrown
     // 1. Player busts
     // 2. Player checks out (wins the game)
     // 3. Player used all 3 darts
