@@ -37,8 +37,8 @@ export default function StandardMode() {
     setPlayer2Name(name2);
     setPlayer1IsNext(player1IsFirst)
     player1IsFirst ? playerWhoWentFirst = name1 : playerWhoWentFirst = name1;
-    let turnCounterCopy = turnCounter;
-    setTurnCounter(turnCounterCopy += 1)
+    let newTurnCounter = turnCounter + 1;
+    setTurnCounter(newTurnCounter)
     if (custumStartingScore) {
       setPlayer1Score(custumStartingScore);
       setPlayer2Score(custumStartingScore);
@@ -128,8 +128,8 @@ export default function StandardMode() {
         console.log('Adding a empty array in handle dart thrown bust')
         setGameState(previousGameState => [...previousGameState, []])
       }
-      let turnCounterCopy = turnCounter;
-      setTurnCounter(turnCounterCopy += 1)
+      let newTurnCounter = turnCounter + 1;
+      setTurnCounter(newTurnCounter)
       setPlayer1IsNext(!player1IsNext);
     }
 
@@ -142,13 +142,103 @@ export default function StandardMode() {
       if (gameState[turnCounter] == undefined) setGameState(previousGameState => [...previousGameState, []]) // if there isnt a [] at end of array, add one
       setScoreThisTurn(0); // these two are paired together quite a bit. can make them a function. 
       setShotCounter(3);
-      let turnCounterCopy = turnCounter; // unsure if this is required or can i do it directly
-      setTurnCounter(turnCounterCopy += 1) // increment turn counter
+      let newTurnCounter = turnCounter + 1; // unsure if this is required or can i do it directly
+      setTurnCounter(newTurnCounter) // increment turn counter
       setPlayer1IsNext(!player1IsNext); //switch players
     }
     console.log(gameState)
 
   }
+
+  function incrementPositionArray(position: number) {
+    let positionArrayCopy = [...positionArray];
+    positionArrayCopy.push({ turn: turnCounter - 1, shot: position });
+    setPositionArray(positionArrayCopy);
+  }
+
+  function setScoreThisTurnAndShotCounter(newScoreThisTurn: number, newShotCounter: number) {
+    setScoreThisTurn(newScoreThisTurn);
+    setShotCounter(newShotCounter); 
+  }
+
+  function switchCurrentPlayer() {
+    setScoreBeforeTurn(!player1IsNext ? player1Score : player2Score) //switch whose score is held here
+    
+    setScoreThisTurn(0); // these two are paired together quite a bit. can make them a function. 
+    setShotCounter(3);
+    let newTurnCounter = turnCounter + 1; // unsure if this is required or can i do it directly
+    setTurnCounter(newTurnCounter)
+    setPlayer1IsNext(!player1IsNext);
+    if (gameState[turnCounter] == undefined) setGameState(previousGameState => [...previousGameState, []]); // if there isnt a [] at end of array, add one
+  }
+
+
+  function handleDartThrownRevamp(value: number, checkoutAllowedDoubleHit: boolean = false) {
+    console.log('Handle Dart Thrown  Revamp called Turn Counter: ' + turnCounter)
+    if (player1Wins) return 0
+
+    let newShotCounter = shotCounter - 1;
+    const newGameState = [...gameState];
+    let valueToPush = value;
+    const scoreThisTurnCopy = scoreThisTurn + value
+
+    // handling position Array Incrementation - maybe this can be moved to a function
+    const position = getPositionInShotArray(shotCounter)
+    incrementPositionArray(position);
+    
+    //setShotCounter(newShotCounter); // this does not need to be called here, if the last dart is thrown, it will be set back to 3 in the last if statement
+    //setScoreThisTurn(scoreThisTurnCopy); // this also will be changed if either if conditions are true. can move to the end of the function
+    setScoreThisTurnAndShotCounter(scoreThisTurnCopy, newShotCounter );
+
+    let nextScore = player1IsNext ? player1Score - value : player2Score - value;
+    player1IsNext ? setPlayer1Score(nextScore) : setPlayer2Score(nextScore) //Can I turn this into a function?
+    
+
+
+    
+
+    if (nextScore === 0 && checkoutAllowedDoubleHit) player1IsNext ? setPlayer1Wins(true) : setPlayer2Wins(true); // I think I can return here
+    else if (nextScore === 0 && !checkoutAllowedDoubleHit || nextScore <= 1) { // BUST - reset score to before turn, and switch player
+      valueToPush = -1; // this is a bust
+      player1IsNext ? setPlayer1Score(scoreBeforeTurn) : setPlayer2Score(scoreBeforeTurn);
+      switchCurrentPlayer();
+    }
+
+    newGameState[turnCounter - 1].push(valueToPush);
+    setGameState(newGameState);
+
+    if (newShotCounter <= 0) { // last Dart Thrown. //Switch player and add empty array to gameState.
+      switchCurrentPlayer();
+    }
+
+    console.log(gameState)
+
+  }
+
+
+  // I need to find out all the different  ways to end a turn this is for handleDartThrownRevamp
+    // 1. Player busts
+    // 2. Player checks out (wins the game)
+    // 3. Player used all 3 darts
+    // 
+    // Ways a turn can go
+    // 1. Player busts
+    // 2. Player checks out (wins the game)
+    // 3. Player Scores
+    // 4. Player Misses
+
+    // Thats 3 different ways to finish this. bust, checkout, out of darts.
+    // out of darts, should be handled at end of function, once all logic has been covered.
+    // Steps that make sense to me at the moment
+    // 0. If player has Already won, return
+    // 1. Check if player wins (maybe return here if they do?)
+    // 2. Check if player busts (maybe return here if they do?)
+    // 3. If not checked out or bust, update score, 
+    // 4. Check  newShotCounter if 0, if so, reset shot counter, increment turn counter, switch player, and reset scoreThisTurn, 
+    // if not updateShotCounter, and scoreThisTurn, and return to top of function.
+    // Each of these could nearlu be a seperate function for clear consise flow.
+    // TODO figure out when a new [] is needed, and how to always have the correct position pointer.
+
 
   function onTileClick(value: number) {
     if (value === 50) handleDartThrown(value, true)
@@ -269,8 +359,8 @@ export default function StandardMode() {
     setShotCounter(newShotCounter);
     if (newShotCounter >= 3) {
       setShotCounter(0);
-      let turnCounterCopy = turnCounter;
-      setTurnCounter(turnCounterCopy += 1)
+      let newTurnCounter = turnCounter + 1;
+      setTurnCounter(newTurnCounter)
       setPlayer1IsNext(!player1IsNext);
     }
   }
