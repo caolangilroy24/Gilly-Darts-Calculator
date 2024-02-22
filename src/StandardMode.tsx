@@ -175,105 +175,6 @@ export default function StandardMode() {
     handleDartThrown(value * 2, true)
   }
 
-  function onUndo() {
-    // Need to check if the game is over, if so, return
-    // If Not, need to check if the gameState is empty, if so, return
-
-    // First Check if current player has 3 darts remaining, 
-    //    if so your Undo Is Undoing the last player's turn.
-    //    So Change Turn Counter - 1
-    // If neither, need to check if the last turn was a bust
-    // NOTE: Easiest way to check if the last turn was a bust is to check if the last value in the array is -1 by popping it off and checking it.
-    // If it was, 
-    // 1. I have to check what position the Bust was stored In.
-        // Can Check how long the Array Is after popping the bust off to get position e.g. [10, 10, -1] => [10, 10] => arr.length = 2 so next dart position will be at 2 here.
-        // [10, -1] => [10] => length = 1, position 1 is where the next dart will go
-        // [-1] => [] => length = 0, position 0 is where the next dart will go
-    //2. The Score has been reset after a Bust, so Ignoring the bust score of -1, I need to remove any other scores the user got this turn
-        // For example score = 40 turn = [20, 10, -1], Score is reset to 40, One Undo should bring you to 10 (-20-10)
-        // If you undo 2 more times from here, you are back at the 40 that you previously were at. 
-        // If length is not 0, use reduce to sum each number, and remove from the score, to get the score before Bust.
-        // if length is 0, leave the score as it is.
-    // 3. If it is not a bust, can add the popped value back to current score, and remove the last value from the array.
-    // Finally, pop off from the position array regardless of the rest.
-    // Unsure from here: 
-    // set shot counter to the shot counter popped off the position array? this should put you back to where you were before?
-    
-
-
-    if (player1Score === 501 && player2Score === 501) return;
-    console.log('\n\n\nundo clicked')
-    let undoPosition = 0;
-    let newShotCounter = shotCounter + 1;
-    let newTurnCounter = turnCounter;
-    let newPlayerOneIsNext = player1IsNext;
-    if (gameState[newTurnCounter] !== undefined && gameState[newTurnCounter].length === 0) gameState.pop();
-
-    console.log('shotCounter = ' + shotCounter)
-    switch (shotCounter) {
-      case 3:
-
-        undoPosition = 2 //gameState[newTurnCounter-1].length;
-        newShotCounter = 1;
-        newTurnCounter = turnCounter - 1;
-        newPlayerOneIsNext = !player1IsNext;
-
-        let lastPosition = gameState[newTurnCounter - 1].length - 1;
-        if (lastPosition !== 2) undoPosition = lastPosition;
-
-        console.log('last Position = ' + lastPosition)
-        console.log('gameState[newTurnCounter-1].length')
-        console.log(gameState[newTurnCounter - 1].length)
-        console.log(gameState[newTurnCounter - 1])
-        setPlayer1IsNext(newPlayerOneIsNext);
-        setTurnCounter(newTurnCounter);
-        // gameState.pop();
-        // Will need to change whose turn it is
-        // Will need to change the score
-        // Will need to change the shot counter
-        // Will need to change the turn counter
-
-
-        break;
-      case 2:
-        undoPosition = 0;
-        if (gameState[newTurnCounter] && gameState[newTurnCounter].length === 1) gameState.pop();
-        break;
-      case 1:
-        undoPosition = 1;
-        break;
-    }
-    console.log('Turn counter: ' + turnCounter)
-    console.log('New Turn counter: ' + newTurnCounter)
-    const lastThrow = gameState[newTurnCounter - 1][undoPosition];
-    const newGameState = gameState[newTurnCounter - 1].pop();
-    const testPlayerScore = (newPlayerOneIsNext) ? player1Score : player2Score;
-    console.log(`\n\n\n\n-----------debug-----------\n newTurnCounter-1 : ${newTurnCounter - 1} undoPosition : ${undoPosition}`)
-    console.log(positionArray)
-    console.log(`Test Player SCore : ${testPlayerScore} - lastThrow : ${lastThrow}`)
-    console.log(gameState)
-    console.log(newGameState);
-
-    if (lastThrow !== -1) {
-      console.log('MINUS 1 @@@@@@@@@@')
-      const newScore = (newPlayerOneIsNext) ? player1Score + lastThrow : player2Score + lastThrow;
-      newPlayerOneIsNext ? setPlayer1Score(newScore) : setPlayer2Score(newScore);
-    } else {
-      console.log('Undoing a bust')
-      const scoredBeforeBust = gameState[newTurnCounter - 1].reduce((acc, num) => {
-        return num !== -1 ? acc + num : acc
-      }, 0
-      );
-      const newScore = (newPlayerOneIsNext) ? player1Score - scoredBeforeBust : player2Score - scoredBeforeBust;
-      newPlayerOneIsNext ? setPlayer1Score(newScore) : setPlayer2Score(newScore);
-    }
-
-
-    player1IsNext ? console.log(player1Score) : console.log(player2Score)
-    setShotCounter(newShotCounter);
-
-  }
-
   function undoScore(lastScored: number, newTurn: number[],player1IsNextCopy: boolean) {
     let newScore = (player1IsNextCopy) ? player1Score : player2Score;
     if (lastScored === -1) {
@@ -285,8 +186,6 @@ export default function StandardMode() {
       newScore += lastScored;
     }
     player1IsNextCopy ? setPlayer1Score(newScore) : setPlayer2Score(newScore);
-
-
 
   }
 
@@ -326,113 +225,31 @@ export default function StandardMode() {
     
     if (shotCounter === 3) {
       newTurnCounter = turnCounter - 1;
-      //console.log('turnCounter ' + turnCounter)
       setTurnCounter(newTurnCounter);
       player1IsNextCopy = !player1IsNext;
       setPlayer1IsNext(player1IsNextCopy);
 
-      // setShotCounter(1);
       newShotCounter = 1;
       console.log('\n\n\ngameStateCopy')
       console.log(gameStateCopy)
       gameStateCopy.pop();
-      //console.log('old gameState:')
-      //console.log(gameState)
-      //console.log('new gameState:')
-      //console.log(gameStateCopy)
       setGameState(gameStateCopy);
-      //console.log('newTurnCounter ' + newTurnCounter)
-      //console.log(gameState)
-      //console.log('lastScored: ' + lastScored)
-      
-      // this seems to be working correctly, but I need to test it more and remove console logs
     }
     let lastScored = gameStateCopy[newTurnCounter-1].slice(-1)
     setShotCounter(newShotCounter);
     let newTurn = gameStateCopy[newTurnCounter-1].slice(0, -1);
+    // const shotCountTest = 3 - newTurn.length;
+    // console.log('shotCountTest')
+    // console.log(shotCountTest)
+    // setShotCounter(shotCountTest);
     undoScore(lastScored[0], newTurn, player1IsNextCopy);
     console.log(gameStateCopy[newTurnCounter-1])
-    let testArray = [1,2,3,4,5]
-    // let newTurn = testArray.slice(0, -1);
     console.log('newTurn')
     console.log(newTurn)
-    // let newGameState = [...gameState];
     gameStateCopy[newTurnCounter-1] = newTurn;
     setGameState(gameStateCopy);
     console.log('newGameState:')
     console.log(gameStateCopy)
-
-    // console.log(' Last Dart Hit: ' +gameState[turnCounter-1][])
-
-    // console.log('\n\n\nundo clicked')
-    // let undoPosition = 0;
-    // let newShotCounter = shotCounter + 1;
-    // let newTurnCounter = turnCounter;
-    // let newPlayerOneIsNext = player1IsNext;
-    // if (gameState[newTurnCounter] !== undefined && gameState[newTurnCounter].length === 0) gameState.pop();
-
-    // console.log('shotCounter = ' + shotCounter)
-    // switch (shotCounter) {
-    //   case 3:
-
-    //     undoPosition = 2 //gameState[newTurnCounter-1].length;
-    //     newShotCounter = 1;
-    //     newTurnCounter = turnCounter - 1;
-    //     newPlayerOneIsNext = !player1IsNext;
-
-    //     let lastPosition = gameState[newTurnCounter - 1].length - 1;
-    //     if (lastPosition !== 2) undoPosition = lastPosition;
-
-    //     console.log('last Position = ' + lastPosition)
-    //     console.log('gameState[newTurnCounter-1].length')
-    //     console.log(gameState[newTurnCounter - 1].length)
-    //     console.log(gameState[newTurnCounter - 1])
-    //     setPlayer1IsNext(newPlayerOneIsNext);
-    //     setTurnCounter(newTurnCounter);
-    //     // gameState.pop();
-    //     // Will need to change whose turn it is
-    //     // Will need to change the score
-    //     // Will need to change the shot counter
-    //     // Will need to change the turn counter
-
-
-    //     break;
-    //   case 2:
-    //     undoPosition = 0;
-    //     if (gameState[newTurnCounter] && gameState[newTurnCounter].length === 1) gameState.pop();
-    //     break;
-    //   case 1:
-    //     undoPosition = 1;
-    //     break;
-    // }
-    // console.log('Turn counter: ' + turnCounter)
-    // console.log('New Turn counter: ' + newTurnCounter)
-    // const lastThrow = gameState[newTurnCounter - 1][undoPosition];
-    // const newGameState = gameState[newTurnCounter - 1].pop();
-    // const testPlayerScore = (newPlayerOneIsNext) ? player1Score : player2Score;
-    // console.log(`\n\n\n\n-----------debug-----------\n newTurnCounter-1 : ${newTurnCounter - 1} undoPosition : ${undoPosition}`)
-    // console.log(positionArray)
-    // console.log(`Test Player SCore : ${testPlayerScore} - lastThrow : ${lastThrow}`)
-    // console.log(gameState)
-    // console.log(newGameState);
-
-    // if (lastThrow !== -1) {
-    //   console.log('MINUS 1 @@@@@@@@@@')
-    //   const newScore = (newPlayerOneIsNext) ? player1Score + lastThrow : player2Score + lastThrow;
-    //   newPlayerOneIsNext ? setPlayer1Score(newScore) : setPlayer2Score(newScore);
-    // } else {
-    //   console.log('Undoing a bust')
-    //   const scoredBeforeBust = gameState[newTurnCounter - 1].reduce((acc, num) => {
-    //     return num !== -1 ? acc + num : acc
-    //   }, 0
-    //   );
-    //   const newScore = (newPlayerOneIsNext) ? player1Score - scoredBeforeBust : player2Score - scoredBeforeBust;
-    //   newPlayerOneIsNext ? setPlayer1Score(newScore) : setPlayer2Score(newScore);
-    // }
-
-
-    // player1IsNext ? console.log(player1Score) : console.log(player2Score)
-    // setShotCounter(newShotCounter);
 
   }
 
