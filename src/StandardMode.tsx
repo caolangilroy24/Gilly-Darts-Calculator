@@ -27,6 +27,7 @@ export default function StandardMode() {
   const [p2LastTurn, setP2LastTurn] = useState<number>()
   const [positionArray, setPositionArray] = useState<Array<{ turn: number, shot: number }>>([])
   const [handleBustBoolean, setHandleBustBoolean] = useState<boolean>(false)
+  const [throwingLastDart, setThrowingLastDart] = useState<boolean>(false)
   
   useEffect(() => {
     if (player1Name && player2Name) {
@@ -35,11 +36,14 @@ export default function StandardMode() {
   }, [player1Name, player2Name])
 
   useEffect(() => {
-    if (shotCounter === 1 || handleBustBoolean === true) {
+    if (throwingLastDart === true || handleBustBoolean === true) {
+      // if (shotCounter === 1 || handleBustBoolean === true) {
       let newGameState = [...gameState];
+      // if (newGameState[turnCounter].length === 0) return
       newGameState.push([]);
       setGameState(newGameState);
       setHandleBustBoolean(false);
+      setThrowingLastDart(false);
     }
 
   }, [shotCounter, handleBustBoolean])
@@ -100,6 +104,7 @@ export default function StandardMode() {
 
   function handleDartThrown(value: number, checkoutAllowedDoubleHit: boolean = false) {
     if (player1Wins) return 0 // Game is over, return
+    if (shotCounter === 1) setThrowingLastDart(true);
 
     // Update shot counter and scoreThisTurn. Make a copy of the gameState to avoid mutating state.
     let newShotCounter = shotCounter - 1;
@@ -269,9 +274,25 @@ export default function StandardMode() {
 
   }
 
+  function undoScore(lastScored: number, newTurn: number[],player1IsNextCopy: boolean) {
+    let newScore = (player1IsNextCopy) ? player1Score : player2Score;
+    if (lastScored === -1) {
+      let restOfTurn = newTurn.reduce((acc, num) => {
+        return acc + num;
+      }, 0);
+      newScore -= restOfTurn;
+    } else {
+      newScore += lastScored;
+    }
+    player1IsNextCopy ? setPlayer1Score(newScore) : setPlayer2Score(newScore);
+
+
+
+  }
+
   function onUndoRevamp() {
-    // Need to check if the game is just starting, if so, return
-    // If Not, need to check if the gameState is empty, if so, return
+    // Need to check if the game is just starting, if so, return done
+    // If Not, need to check if the gameState is empty, if so, return (same as above really)
 
     // First Check if current player has 3 darts remaining, 
     //    if so your Undo Is Undoing the last player's turn.
@@ -298,25 +319,51 @@ export default function StandardMode() {
 
     if (player1Score === 501 && player2Score === 501) return;
     let newTurnCounter = turnCounter;
-    let newGameState = [...gameState];
+    let gameStateCopy = [...gameState];
+    let newShotCounter = shotCounter + 1;
+    let player1IsNextCopy = player1IsNext;
 
     
     if (shotCounter === 3) {
       newTurnCounter = turnCounter - 1;
-      console.log('turnCounter ' + turnCounter)
+      //console.log('turnCounter ' + turnCounter)
       setTurnCounter(newTurnCounter);
-      setPlayer1IsNext(!player1IsNext);
-      setShotCounter(1);
-      newGameState.pop();
-      console.log('old gameState:')
-      console.log(gameState)
-      console.log('new gameState:')
-      console.log(newGameState)
-      setGameState(newGameState);
-      console.log('newTurnCounter ' + newTurnCounter)
+      player1IsNextCopy = !player1IsNext;
+      setPlayer1IsNext(player1IsNextCopy);
+
+      // setShotCounter(1);
+      newShotCounter = 1;
+      console.log('\n\n\ngameStateCopy')
+      console.log(gameStateCopy)
+      gameStateCopy.pop();
+      //console.log('old gameState:')
+      //console.log(gameState)
+      //console.log('new gameState:')
+      //console.log(gameStateCopy)
+      setGameState(gameStateCopy);
+      //console.log('newTurnCounter ' + newTurnCounter)
+      //console.log(gameState)
+      //console.log('lastScored: ' + lastScored)
       
       // this seems to be working correctly, but I need to test it more and remove console logs
     }
+    let lastScored = gameStateCopy[newTurnCounter-1].slice(-1)
+    setShotCounter(newShotCounter);
+    let newTurn = gameStateCopy[newTurnCounter-1].slice(0, -1);
+    undoScore(lastScored[0], newTurn, player1IsNextCopy);
+    console.log(gameStateCopy[newTurnCounter-1])
+    let testArray = [1,2,3,4,5]
+    // let newTurn = testArray.slice(0, -1);
+    console.log('newTurn')
+    console.log(newTurn)
+    // let newGameState = [...gameState];
+    gameStateCopy[newTurnCounter-1] = newTurn;
+    setGameState(gameStateCopy);
+    console.log('newGameState:')
+    console.log(gameStateCopy)
+
+    // console.log(' Last Dart Hit: ' +gameState[turnCounter-1][])
+
     // console.log('\n\n\nundo clicked')
     // let undoPosition = 0;
     // let newShotCounter = shotCounter + 1;
