@@ -252,13 +252,7 @@ export default function StandardMode() {
         newShotCounter = 1;
         break
     }
-    setShotCounter(newShotCounter); ///
-
-    // if (newTurn.length === 0) {
-    // const shotCountTest = 3 - newTurn.length;
-    // console.log('shotCountTest')
-    // console.log(shotCountTest)
-    // setShotCounter(shotCountTest);
+    setShotCounter(newShotCounter);
     undoScore(lastScored[0], newTurn, player1IsNextCopy);
     console.log(gameStateCopy[newTurnCounter-1])
     console.log('newTurn')
@@ -271,16 +265,7 @@ export default function StandardMode() {
   }
 
   function onMiss() {
-
-    let newShotCounter = shotCounter + 1;
-    // console.log(newShotCounter)
-    setShotCounter(newShotCounter);
-    if (newShotCounter >= 3) {
-      setShotCounter(0);
-      let newTurnCounter = turnCounter + 1;
-      setTurnCounter(newTurnCounter)
-      setPlayer1IsNext(!player1IsNext);
-    }
+    handleDartThrown(0)
   }
 
   myArray1.forEach((value) => {
