@@ -219,7 +219,7 @@ export default function StandardMode() {
     if (player1Score === 501 && player2Score === 501) return;
     let newTurnCounter = turnCounter;
     let gameStateCopy = [...gameState];
-    let newShotCounter = shotCounter + 1;
+    let newShotCounter = shotCounter;
     let player1IsNextCopy = player1IsNext;
 
     
@@ -236,8 +236,25 @@ export default function StandardMode() {
       setGameState(gameStateCopy);
     }
     let lastScored = gameStateCopy[newTurnCounter-1].slice(-1)
-    setShotCounter(newShotCounter);
     let newTurn = gameStateCopy[newTurnCounter-1].slice(0, -1);
+    console.log('newshot length')
+    console.log(newTurn.length)
+    console.log('shotCounter')
+    console.log(newShotCounter)
+    switch (newTurn.length) {
+      case 0:
+        newShotCounter = 3;
+        break
+      case 1:
+        newShotCounter = 2;
+        break
+      case 2:
+        newShotCounter = 1;
+        break
+    }
+    setShotCounter(newShotCounter); ///
+
+    // if (newTurn.length === 0) {
     // const shotCountTest = 3 - newTurn.length;
     // console.log('shotCountTest')
     // console.log(shotCountTest)
