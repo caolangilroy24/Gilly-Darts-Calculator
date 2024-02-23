@@ -1,6 +1,6 @@
 import React from 'react'
-import WoodenFrame from './img/WoodenFrame.jpg';
-import MainMenu from './MainMenu';
+import WoodenFrame from '../assets/WoodenFrame.jpg';
+import MainMenu from '../pages/Home/MainMenu';
 
 export default function ChalkBoard() {
   return (

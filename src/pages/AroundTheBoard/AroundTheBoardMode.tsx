@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import NumberTile from './NumberTile';
-import Bull from './Bull';
-import ScoreBoard from './ScoreBoard';
+import NumberTile from '../../components/NumberTile';
+import Bull from '../../components/Bull';
+import ScoreBoard from '../../components/ScoreBoard';
 import AroundTheBoardVisibleTiles from './AroundTheBoardVisibleTiles';
 
 export default function AroundTheBoardMode() {

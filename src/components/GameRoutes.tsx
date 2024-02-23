@@ -1,9 +1,9 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import StandardMode from './StandardMode'
-import AroundTheBoardMode from './AroundTheBoardMode'
-import CricketMode from './CricketMode'
-import MainMenu from './MainMenu'
+import StandardMode from '../pages/Standard/StandardMode'
+import AroundTheBoardMode from '../pages/AroundTheBoard/AroundTheBoardMode'
+import CricketMode from '../pages/Cricket/CricketMode'
+import MainMenu from '../pages/Home/MainMenu'
 import ChalkBoard from './ChalkBoard'
 
 

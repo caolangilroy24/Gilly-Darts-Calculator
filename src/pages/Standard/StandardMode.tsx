@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import ScoreBoard from './ScoreBoard'
-import NumberTile from './NumberTile'
-import Bull from './Bull';
-import SelectUser from './SelectUser';
+import ScoreBoard from '../../components/ScoreBoard'
+import NumberTile from '../../components/NumberTile'
+import Bull from '../../components/Bull';
+import SelectUser from '../../components/SelectUser';
 import { LuUndo2 } from "react-icons/lu";
 
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import NumberTile from './NumberTile';
+import NumberTile from '../../components/NumberTile';
 
 interface AroundTheBoardVisibleTilesProps {
     current: number;

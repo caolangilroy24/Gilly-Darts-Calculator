@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ScoreBoard from './CricketScoreBoard'
-import NumberTile from './NumberTile'
-import Bull from './Bull';
+import NumberTile from '../../components/NumberTile'
+import Bull from '../../components/Bull';
 import CricketScoreBoard from './CricketScoreBoard';
 
 interface ScoreObject {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { GiDart } from "react-icons/gi";
 import { GiBull } from "react-icons/gi";
-import DartIconsDisplayArray from './DartIconsDisplayArray';
+import DartIconsDisplayArray from '../../components/DartIconsDisplayArray';
 
 interface CricketCountProps {
     num: number;

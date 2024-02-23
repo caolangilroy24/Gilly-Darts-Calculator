@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import WoodenFrame from './img/WoodenFrame.jpg';
+import WoodenFrame from '../assets/WoodenFrame.jpg';
 
 interface SelectUserProps {
   initiateGame: (name1: string, name2: string, player1IsFirst: boolean) => void;
