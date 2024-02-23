@@ -1,4 +1,3 @@
-import React from 'react'
 import { GiBull } from "react-icons/gi";
 
 interface BullProps {

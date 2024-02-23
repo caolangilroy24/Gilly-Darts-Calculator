@@ -1,21 +1,13 @@
-import React from 'react'
-import { GiDart } from "react-icons/gi";
 import { GiBull } from "react-icons/gi";
 import DartIconsDisplayArray from '../../components/DartIconsDisplayArray';
 
 interface CricketCountProps {
     num: number;
-    testScore: number;
+    dartCounter: number;
 }
 
-
-export default function CricketCount({num, testScore=3}: CricketCountProps) {
+export default function CricketCount({num, dartCounter=3}: CricketCountProps) {
     let output = <div></div>
-    let remaining = [true, true, true]
-    if (testScore===3) remaining = [true, true, true]
-    else if (testScore===2) remaining = [true, true, false]
-    else if (testScore===1) remaining = [true, false, false]
-    else if (testScore===0) remaining = [false, false, false]
 
     if (num === 50) {
         let bullStyle = {fontSize: "1.5em" }
@@ -30,9 +22,8 @@ export default function CricketCount({num, testScore=3}: CricketCountProps) {
             {output}
         </div>
         <div className='bottom-cricket-tile-elements'>
-            <DartIconsDisplayArray testScore={testScore}/>
+            <DartIconsDisplayArray dartCounter={dartCounter}/>
         </div>
-       
     </div>
     
   )

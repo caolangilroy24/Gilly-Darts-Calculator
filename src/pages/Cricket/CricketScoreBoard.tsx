@@ -19,11 +19,11 @@ export default function CricketScoreBoard({scoreArray, name, playerTurn, winner}
     useEffect(()=> {
         let newCricketScores: JSX.Element[] = [] 
         let bullMatch = scoreArray.find((obj)=> obj.value === 50)
-        newCricketScores.push(<CricketCount key='bullScore' num={50} testScore={bullMatch? bullMatch.score: 3}/>)
+        newCricketScores.push(<CricketCount key='bullScore' num={50} dartCounter={bullMatch? bullMatch.score: 3}/>)
         myArray1.forEach((value, index) => {
             let objectMatch = scoreArray.find((obj)=> obj.value === value)
             let keyname = 'scoreFor' + value
-            newCricketScores.push(<CricketCount key={keyname} num={value} testScore={objectMatch? objectMatch.score:3}/>)
+            newCricketScores.push(<CricketCount key={keyname} num={value} dartCounter={objectMatch? objectMatch.score:3}/>)
         })
         setCricketScores(newCricketScores)
     }, [scoreArray])

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react'
-import ScoreBoard from './CricketScoreBoard'
+import { useEffect, useState } from 'react'
 import NumberTile from '../../components/NumberTile'
 import Bull from '../../components/Bull';
 import CricketScoreBoard from './CricketScoreBoard';
@@ -12,7 +11,6 @@ interface ScoreObject {
 
 export default function CricketMode() {
   const[winner, setWinner] = useState<string>('')
-  let gameOver: boolean = false;
   const initialScoresP1 = Array.from({ length: 6 }, (_, index) =>  ( {value: (index + 15), score: 3}));
   const initialScoresP2 = Array.from({ length: 6 }, (_, index) =>  ( {value: (index + 15), score: 3}));
   const [player1IsNext, setPlayer1IsNext] = useState<boolean>(true);

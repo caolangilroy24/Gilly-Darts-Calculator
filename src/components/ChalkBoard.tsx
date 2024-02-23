@@ -1,4 +1,3 @@
-import React from 'react'
 import WoodenFrame from '../assets/WoodenFrame.jpg';
 import MainMenu from '../pages/Home/MainMenu';
 

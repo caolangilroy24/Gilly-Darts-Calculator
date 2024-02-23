@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ScoreBoard from '../../components/ScoreBoard'
 import NumberTile from '../../components/NumberTile'
 import Bull from '../../components/Bull';
@@ -16,15 +16,13 @@ export default function StandardMode() {
   const [shotCounter, setShotCounter] = useState(3)
   const [player1IsNext, setPlayer1IsNext] = useState(true)
   const [scoreBeforeTurn, setScoreBeforeTurn] = useState(501);
-  const [scoreThisTurn, setScoreThisTurn] = useState(0);
+  const [scoreThisTurn, setScoreThisTurn] = useState(0); // This is to display on the score board, e.g. 180!!! 154 etc. Implement later
   const [player1Name, setPlayer1Name] = useState('');
   const [player2Name, setPlayer2Name] = useState('');
   const [showSelectUser, setShowSelectUser] = useState(true);
   let playerWhoWentFirst: string;
   const [gameState, setGameState] = useState<number[][]>([[]]) // odd = first to throw, even = second to throw
   const [turnCounter, setTurnCounter] = useState<number>(0);
-  const [p1LastTurn, setP1LastTurn] = useState<number>()
-  const [p2LastTurn, setP2LastTurn] = useState<number>()
   const [positionArray, setPositionArray] = useState<Array<{ turn: number, shot: number }>>([])
   const [handleBustBoolean, setHandleBustBoolean] = useState<boolean>(false)
   const [throwingLastDart, setThrowingLastDart] = useState<boolean>(false)
@@ -37,22 +35,19 @@ export default function StandardMode() {
 
   useEffect(() => {
     if (throwingLastDart === true || handleBustBoolean === true) {
-      // if (shotCounter === 1 || handleBustBoolean === true) {
       let newGameState = [...gameState];
-      // if (newGameState[turnCounter].length === 0) return
       newGameState.push([]);
       setGameState(newGameState);
       setHandleBustBoolean(false);
       setThrowingLastDart(false);
     }
-
   }, [shotCounter, handleBustBoolean])
 
   function initiateGame(name1: string, name2: string, player1IsFirst: boolean, custumStartingScore?: number) {
     setPlayer1Name(name1);
     setPlayer2Name(name2);
     setPlayer1IsNext(player1IsFirst)
-    player1IsFirst ? playerWhoWentFirst = name1 : playerWhoWentFirst = name1;
+    player1IsFirst ? playerWhoWentFirst = name1 : playerWhoWentFirst = name1; // This is needed for Stats at end
     let newTurnCounter = turnCounter + 1;
     setTurnCounter(newTurnCounter)
     if (custumStartingScore) {
@@ -225,22 +220,18 @@ export default function StandardMode() {
     
     if (shotCounter === 3) {
       newTurnCounter = turnCounter - 1;
-      setTurnCounter(newTurnCounter);
       player1IsNextCopy = !player1IsNext;
-      setPlayer1IsNext(player1IsNextCopy);
-
       newShotCounter = 1;
-      console.log('\n\n\ngameStateCopy')
-      console.log(gameStateCopy)
+
+      setTurnCounter(newTurnCounter);
+      setPlayer1IsNext(player1IsNextCopy);
+      
       gameStateCopy.pop();
       setGameState(gameStateCopy);
     }
     let lastScored = gameStateCopy[newTurnCounter-1].slice(-1)
     let newTurn = gameStateCopy[newTurnCounter-1].slice(0, -1);
-    console.log('newshot length')
-    console.log(newTurn.length)
-    console.log('shotCounter')
-    console.log(newShotCounter)
+
     switch (newTurn.length) {
       case 0:
         newShotCounter = 3;
@@ -254,13 +245,7 @@ export default function StandardMode() {
     }
     setShotCounter(newShotCounter);
     undoScore(lastScored[0], newTurn, player1IsNextCopy);
-    console.log(gameStateCopy[newTurnCounter-1])
-    console.log('newTurn')
-    console.log(newTurn)
-    gameStateCopy[newTurnCounter-1] = newTurn;
     setGameState(gameStateCopy);
-    console.log('newGameState:')
-    console.log(gameStateCopy)
 
   }
 

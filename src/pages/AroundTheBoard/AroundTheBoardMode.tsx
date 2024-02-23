@@ -1,11 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import NumberTile from '../../components/NumberTile';
-import Bull from '../../components/Bull';
+import { useState } from 'react'
 import ScoreBoard from '../../components/ScoreBoard';
 import AroundTheBoardVisibleTiles from './AroundTheBoardVisibleTiles';
 
 export default function AroundTheBoardMode() {
-    let numberArray: number[] = Array.from({ length: 20 }, (_, index) => index + 1);
     const [player1Position, setPlayer1Postiion]= useState(1);
     const [player2Position, setPlayer2Postiion]= useState(1);
     const [shotCounter, setShotCounter] = useState<number>(0);
@@ -13,13 +10,9 @@ export default function AroundTheBoardMode() {
     const [player1Wins, setPlayer1Wins] = useState<boolean>(false);
     const [player2Wins, setPlayer2Wins] = useState<boolean>(false);
 
-    
-
     function onTileClick(index: number) {
         if (player1Wins || player2Wins) return;
-        console.log('clicked')
         let newShotCounter = shotCounter + 1;
-        console.log(newShotCounter)
         setShotCounter(newShotCounter);
         const playerPosition = player1IsNext? player1Position : player2Position
         if (index === playerPosition) {
@@ -29,32 +22,28 @@ export default function AroundTheBoardMode() {
         }
 
         if (newShotCounter >= 3) {
-            // console.log('shotCounter >= 2 + shotCounter: ' + shotCounter)
             setShotCounter(0);
             setPlayer1IsNext(!player1IsNext);
         }
 
     }
     function onMiss() {
-        // setTestCount(testCount + 1)
-        console.log('clickd')
         let newShotCounter = shotCounter + 1;
-        console.log(newShotCounter)
         setShotCounter(newShotCounter);
         if (newShotCounter >= 3) {
-            // console.log('shotCounter >= 2 + shotCounter: ' + shotCounter)
             setShotCounter(0);
             setPlayer1IsNext(!player1IsNext);
         }
     }
   
     function onX3Click() {
-      //quickdebugconsole.log("X3 clicked")
+      //Implement This Later + 25 + 50 to finish
       }
   
     function onX2Click() {
-      //quickdebugconsole.log("X2 clicked")
+      //Implement this later + 25 +50 to finish
       }
+
   return (
     <div className='standard-board'>
         <div className='standard-board-first-row'><ScoreBoard name="Caolan" isAroundTheBoardMode={true} playerTurn={player1IsNext} winner={player1Wins}/> <ScoreBoard name='Dad' isAroundTheBoardMode={true} playerTurn={!player1IsNext} winner={player2Wins}/></div>

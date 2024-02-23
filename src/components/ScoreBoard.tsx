@@ -185,7 +185,7 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
     } else { 
         scoreTile = <div className='score-tile'>
         <div className='top-score-tile-element'>
-            {playerTurn && !winner && <div className='dart-icon-contain'><DartIconsDisplayArray testScore={shotCounter}/></div>}
+            {playerTurn && !winner && <div className='dart-icon-contain'><DartIconsDisplayArray dartCounter={shotCounter}/></div>}
                 {winner && <p>Winner:</p>}
                 {name} - {score}
                 
