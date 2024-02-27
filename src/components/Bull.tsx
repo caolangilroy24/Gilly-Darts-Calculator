@@ -15,9 +15,8 @@ export default function Bull({bull, isCricketMode=false, onTileClick = () => {},
         } else {
             onTileClick(bull)
         }
-        
-        
     }
+
     let style = {};
     let display:any  = <div></div> //this is a hack to get around the fact that display can be a number or a react icon I will fix this later
     let displayStyle = {};

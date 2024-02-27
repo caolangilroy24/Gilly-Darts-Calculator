@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ScoreBoard from '../../components/ScoreBoard';
 import AroundTheBoardVisibleTiles from './AroundTheBoardVisibleTiles';
+import SelectUser from '../../components/SelectUser';
 
 export default function AroundTheBoardMode() {
     const [player1Position, setPlayer1Postiion]= useState(1);
@@ -9,6 +10,16 @@ export default function AroundTheBoardMode() {
     const [player1IsNext, setPlayer1IsNext] = useState<boolean>(true);
     const [player1Wins, setPlayer1Wins] = useState<boolean>(false);
     const [player2Wins, setPlayer2Wins] = useState<boolean>(false);
+    const [player1Name, setPlayer1Name] = useState('');
+    const [player2Name, setPlayer2Name] = useState('');
+    const [showSelectUser, setShowSelectUser] = useState(true);
+
+    useEffect(() => {
+        if (player1Name && player2Name) {
+          setShowSelectUser(false);
+        }
+      }, [player1Name, player2Name])
+
 
     function onTileClick(index: number) {
         if (player1Wins || player2Wins) return;
@@ -44,20 +55,39 @@ export default function AroundTheBoardMode() {
       //Implement this later + 25 +50 to finish
       }
 
-  return (
-    <div className='standard-board'>
-        <div className='standard-board-first-row'><ScoreBoard name="Caolan" isAroundTheBoardMode={true} playerTurn={player1IsNext} winner={player1Wins}/> <ScoreBoard name='Dad' isAroundTheBoardMode={true} playerTurn={!player1IsNext} winner={player2Wins}/></div>
+      function initiateGame(name1: string, name2: string, player1IsFirst: boolean, custumStartingScore?: number) {
+        setPlayer1Name(name1);
+        setPlayer2Name(name2);
+        setPlayer1IsNext(player1IsFirst)
+        // player1IsFirst ? playerWhoWentFirst = name1 : playerWhoWentFirst = name1; // This is needed for Stats at end
+        // let newTurnCounter = turnCounter + 1;
+        // setTurnCounter(newTurnCounter)
+        // if (custumStartingScore) {
+        //   setPlayer1Score(custumStartingScore);
+        //   setPlayer2Score(custumStartingScore);
+        // }
+      }
 
-        <div className='main'>
-            <div className='game-container'>
-                {player1IsNext &&<AroundTheBoardVisibleTiles current={player1Position} onTileClick={onTileClick} onX2Click={onX2Click} onX3Click={onX3Click}/>}
-                {!player1IsNext &&<AroundTheBoardVisibleTiles current={player2Position} onTileClick={onTileClick} onX2Click={onX2Click} onX3Click={onX3Click}/>}
+    if (showSelectUser) {
+    return (
+        <SelectUser initiateGame={initiateGame} />
+    )
+    } else {
+        return (
+            <div className='standard-board'>
+                <div className='standard-board-first-row'><ScoreBoard name={player1Name} isAroundTheBoardMode={true} playerTurn={player1IsNext} winner={player1Wins}/> <ScoreBoard name={player2Name} isAroundTheBoardMode={true} playerTurn={!player1IsNext} winner={player2Wins}/></div>
+
+                <div className='main'>
+                    <div className='game-container'>
+                        {player1IsNext &&<AroundTheBoardVisibleTiles current={player1Position} onTileClick={onTileClick} onX2Click={onX2Click} onX3Click={onX3Click}/>}
+                        {!player1IsNext &&<AroundTheBoardVisibleTiles current={player2Position} onTileClick={onTileClick} onX2Click={onX2Click} onX3Click={onX3Click}/>}
+
+                    </div>
+
+                </div>
+                <div className='standard-board-first-row'><div className='miss' onClick={onMiss}> Miss </div></div>
 
             </div>
-
-        </div>
-        <div className='standard-board-first-row'><div className='miss' onClick={onMiss}> Miss </div></div>
-
-    </div>
-  )
+        )
+    }
 }
