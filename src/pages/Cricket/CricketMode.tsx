@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import NumberTile from '../../components/NumberTile'
 import Bull from '../../components/Bull';
 import CricketScoreBoard from './CricketScoreBoard';
+import SelectUser from '../../components/SelectUser';
 
 interface ScoreObject {
     value: number;
@@ -23,10 +24,20 @@ export default function CricketMode() {
   const tileArray: number[] = Array.from({ length: 6 }, (_, index) => index + 15);
   const numberTiles: JSX.Element[] = [];
 
+  const [player1Name, setPlayer1Name] = useState('');
+  const [player2Name, setPlayer2Name] = useState('');
+  const [showSelectUser, setShowSelectUser] = useState(true);
+
   useEffect(() => { 
     setPlayer1Score([...player1ScoreArray, {value: 50, score: 3}])
     setPlayer2Score([...player2ScoreArray, {value: 50, score: 3}])
   }, [])
+
+  useEffect(() => {
+    if (player1Name && player2Name) {
+      setShowSelectUser(false);
+    }
+}, [player1Name, player2Name])
 
   useEffect(()=> {
     const p1Win = player1ScoreArray.every((obj)=>  obj.score === 0)
@@ -121,11 +132,30 @@ export default function CricketMode() {
           numberTiles.push(<NumberTile num={value} onTileClick={onTileClick} onX3Click={onX3Click} onX2Click={onX2Click}/>)
       })
   
-  return (
-    <div className='standard-board'>
-        <div className='standard-board-first-row'><CricketScoreBoard key='Player 1' name="Caolan" scoreArray={player1ScoreArray} playerTurn={player1IsNext} winner={player1Wins}/> <CricketScoreBoard key='Player 2' name='Dad' scoreArray={player2ScoreArray} playerTurn={!player1IsNext} winner={player2Wins}/></div>
-      <div className='main'><div className='game-container'><Bull isCricketMode={true} bull={50} onX2Click={onX2Click}/><Bull isCricketMode={true} bull={25} onTileClick={onTileClick}/>{numberTiles}</div></div>
-      <div className='standard-board-first-row'><div className='miss' onClick={onMiss}> Miss </div></div>
-    </div>
-  )
+  function initiateGame(name1: string, name2: string, player1IsFirst: boolean, custumStartingScore?: number) {
+    setPlayer1Name(name1);
+    setPlayer2Name(name2);
+    setPlayer1IsNext(player1IsFirst)
+    // player1IsFirst ? playerWhoWentFirst = name1 : playerWhoWentFirst = name1; // This is needed for Stats at end
+    // let newTurnCounter = turnCounter + 1;
+    // setTurnCounter(newTurnCounter)
+    // if (custumStartingScore) {
+    //   setPlayer1Score(custumStartingScore);
+    //   setPlayer2Score(custumStartingScore);
+    // }
+  }
+
+  if (showSelectUser) {
+      return (
+          <SelectUser initiateGame={initiateGame} />
+      )
+  } else {
+    return (
+      <div className='standard-board'>
+          <div className='standard-board-first-row'><CricketScoreBoard key='Player 1' name={player1Name} scoreArray={player1ScoreArray} playerTurn={player1IsNext} winner={player1Wins}/> <CricketScoreBoard key='Player 2' name={player2Name} scoreArray={player2ScoreArray} playerTurn={!player1IsNext} winner={player2Wins}/></div>
+        <div className='main'><div className='game-container'><Bull isCricketMode={true} bull={50} onX2Click={onX2Click}/><Bull isCricketMode={true} bull={25} onTileClick={onTileClick}/>{numberTiles}</div></div>
+        <div className='standard-board-first-row'><div className='miss' onClick={onMiss}> Miss </div></div>
+      </div>
+    )
+  }
 }

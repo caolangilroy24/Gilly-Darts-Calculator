@@ -18,7 +18,7 @@ export default function AroundTheBoardMode() {
         if (player1Name && player2Name) {
           setShowSelectUser(false);
         }
-      }, [player1Name, player2Name])
+    }, [player1Name, player2Name])
 
 
     function onTileClick(index: number) {
@@ -49,13 +49,13 @@ export default function AroundTheBoardMode() {
   
     function onX3Click() {
       //Implement This Later + 25 + 50 to finish
-      }
+    }
   
     function onX2Click() {
       //Implement this later + 25 +50 to finish
-      }
+    }
 
-      function initiateGame(name1: string, name2: string, player1IsFirst: boolean, custumStartingScore?: number) {
+    function initiateGame(name1: string, name2: string, player1IsFirst: boolean, custumStartingScore?: number) {
         setPlayer1Name(name1);
         setPlayer2Name(name2);
         setPlayer1IsNext(player1IsFirst)
@@ -66,12 +66,12 @@ export default function AroundTheBoardMode() {
         //   setPlayer1Score(custumStartingScore);
         //   setPlayer2Score(custumStartingScore);
         // }
-      }
+    }
 
     if (showSelectUser) {
-    return (
-        <SelectUser initiateGame={initiateGame} />
-    )
+        return (
+            <SelectUser initiateGame={initiateGame} />
+        )
     } else {
         return (
             <div className='standard-board'>
