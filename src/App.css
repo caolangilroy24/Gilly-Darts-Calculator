@@ -196,14 +196,20 @@
   background: #008000;
   border: 3px solid #000000;
 }
-
-.game-container {
+/* Old CSS with Flexbox, saved as back up, remove if not needed */
+/* .game-container {
   width: 80vw;
   display: flex;
-  /* justify-self: center; */
+  comment this one out justify-self: center; 
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
+} */
+
+.game-container {
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 }
 .number-tile-container{
   display: flex;
@@ -330,7 +336,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  font-size: 3rem;
+  font-size: 3em;
 
   width: 20vw;
   height: 8vh;
@@ -387,7 +393,7 @@ rotate: 45deg;
   align-items: center;
   flex-direction: row;
   font-family: VT323;
-  font-size: 3vw;
+  font-size: 2rem;
   color: #00FF00;
   width: 18vw;
 }
@@ -537,5 +543,130 @@ font-family: VT323;
 color: #00FF00;
 
 }
+
+/* Frame 11 */
+.updated-number-tile {
+  position: absolute;
+  width: 245px;
+  height: 245px;
+  left: 1225px;
+  top: 243px;
+
+  box-sizing: border-box;
+
+position: absolute;
+width: 235px;
+height: 235px;
+left: 5px;
+top: 5px;
+
+background: rgba(249, 223, 188, 0.7);
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+backdrop-filter: blur(2px);
+/* Note: backdrop-filter has minimal browser support */
+border-radius: 20px;
+
+
+/* 17 */
+
+box-sizing: border-box;
+
+position: absolute;
+width: 143px;
+height: 129px;
+left: 51px;
+top: 5px;
+
+font-family: 'Koulen';
+font-style: normal;
+font-weight: 400;
+font-size: 96px;
+line-height: 173px;
+text-align: center;
+
+color: rgba(48, 159, 106, 0.8);
+
+border: 1px solid #000000;
+backdrop-filter: blur(2px);
+/* Note: backdrop-filter has minimal browser support */
+
+
+/* Rectangle 31 */
+
+position: absolute;
+width: 115px;
+height: 68px;
+left: 7px;
+top: 170px;
+
+background: rgba(48, 159, 106, 0.7);
+backdrop-filter: blur(2px);
+/* Note: backdrop-filter has minimal browser support */
+border-radius: 18px;
+
+
+/* Rectangle 45 */
+
+position: absolute;
+width: 116px;
+height: 68px;
+left: 122px;
+top: 170px;
+
+background: rgba(48, 159, 106, 0.7);
+backdrop-filter: blur(2px);
+/* Note: backdrop-filter has minimal browser support */
+border-radius: 18px;
+
+
+/* x3 */
+
+position: absolute;
+width: 72px;
+height: 32px;
+left: 30px;
+top: 188px;
+
+font-family: 'Koulen';
+font-style: normal;
+font-weight: 400;
+font-size: 64px;
+line-height: 116px;
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #FFFFFF;
+
+
+
+/* x2 */
+
+position: absolute;
+width: 73px;
+height: 32px;
+left: 142px;
+top: 188px;
+
+font-family: 'Koulen';
+font-style: normal;
+font-weight: 400;
+font-size: 64px;
+line-height: 116px;
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #FFFFFF;
+
+
+
+
+
+}
+
+
+
+
 
 

@@ -38,8 +38,6 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
       }
     }
     let remainingDarts = 3;
-    
-    
 
     useEffect(()=> {
         if (score <= 170) {
@@ -94,7 +92,6 @@ export default function ScoreBoard({name, score = 501, shotCounter=3, scoreBefor
           return `S${score}`
         }
       }
-      
     }
 
     function possibleTwoDartFinishes(currentScore: number): string[] {
